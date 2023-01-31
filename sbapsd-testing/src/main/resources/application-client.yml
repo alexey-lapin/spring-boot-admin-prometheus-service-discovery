@@ -1,0 +1,14 @@
+server:
+  port: 0
+
+spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        exclude: "*"
