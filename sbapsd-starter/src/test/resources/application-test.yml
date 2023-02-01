@@ -1,0 +1,11 @@
+sbapsd:
+  servers:
+    s1:
+      url: http://localhost:8080
+      version: 2
+      labels:
+        l1: v1
+        l2: v2
+      filter:
+        - type: app-name
+          value: app-1
