@@ -1,6 +1,6 @@
 package com.github.alexeylapin.sbapsd.web;
 
-import com.github.alexeylapin.sbapsd.InstanceProvider;
+import com.github.alexeylapin.sbapsd.service.InstanceProvider;
 import com.github.alexeylapin.sbapsd.model.Item;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package com.github.alexeylapin.sbapsd;
+package com.github.alexeylapin.sbapsd.service;
 
 import com.github.alexeylapin.sbapsd.model.Item;
 import de.codecentric.boot.admin.server.domain.entities.Application;
@@ -20,8 +20,7 @@ public class ApplicationRegistryInstanceProvider implements InstanceProvider {
 
     @Override
     public Flux<Item> getItems() {
-        return applicationRegistry.getApplications()
-                .map(item -> new Item(null, null));
+        return applicationRegistry.getApplications().map(this::convert);
     }
 
     private Item convert(Application application) {

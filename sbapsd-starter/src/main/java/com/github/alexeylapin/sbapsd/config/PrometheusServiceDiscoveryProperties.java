@@ -1,6 +1,6 @@
 package com.github.alexeylapin.sbapsd.config;
 
-import com.github.alexeylapin.sbapsd.ServerAccessor;
+import com.github.alexeylapin.sbapsd.service.ServerAccessor;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

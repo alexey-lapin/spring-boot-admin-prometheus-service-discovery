@@ -1,4 +1,4 @@
-package com.github.alexeylapin.sbapsd;
+package com.github.alexeylapin.sbapsd.service;
 
 import com.github.alexeylapin.sbapsd.model.Application;
 import com.github.alexeylapin.sbapsd.model.Item;

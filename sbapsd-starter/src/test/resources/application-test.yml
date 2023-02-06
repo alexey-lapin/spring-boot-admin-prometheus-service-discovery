@@ -1,11 +1,19 @@
 sbapsd:
   servers:
     s1:
+      type: web-v2
       url: http://localhost:8080
-      version: 2
       labels:
         l1: v1
         l2: v2
+      filter:
+        - type: app-name
+          value: app-1
+    s2:
+      type: registry-v2
+      labels:
+        l3: v3
+        l4: v4
       filter:
         - type: app-name
           value: app-1

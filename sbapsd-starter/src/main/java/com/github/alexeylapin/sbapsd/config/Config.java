@@ -1,8 +1,8 @@
 package com.github.alexeylapin.sbapsd.config;
 
-import com.github.alexeylapin.sbapsd.InstanceProvider;
-import com.github.alexeylapin.sbapsd.ServerAccessorRegistry;
-import com.github.alexeylapin.sbapsd.WebInstanceProvider;
+import com.github.alexeylapin.sbapsd.service.InstanceProvider;
+import com.github.alexeylapin.sbapsd.service.ServerAccessorRegistry;
+import com.github.alexeylapin.sbapsd.service.WebInstanceProvider;
 import com.github.alexeylapin.sbapsd.web.InstanceController;
 import com.github.alexeylapin.sbapsd.web.ReactiveHandlerMapping;
 import com.github.alexeylapin.sbapsd.web.ServletHandlerMapping;

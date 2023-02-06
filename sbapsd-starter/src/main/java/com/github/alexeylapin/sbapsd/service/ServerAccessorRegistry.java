@@ -1,4 +1,4 @@
-package com.github.alexeylapin.sbapsd;
+package com.github.alexeylapin.sbapsd.service;
 
 import java.util.Map;
 import java.util.Optional;
