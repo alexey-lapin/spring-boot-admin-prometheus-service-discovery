@@ -2,11 +2,16 @@ plugins {
     id("java-library")
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
 dependencies {
     api(project(":sbapsd-core"))
 
-    annotationProcessor("org.projectlombok:lombok:1.18.18")
-    compileOnly("org.projectlombok:lombok:1.18.18")
+    annotationProcessor("org.projectlombok:lombok:1.18.26")
+    compileOnly("org.projectlombok:lombok:1.18.26")
 
     compileOnly("de.codecentric:spring-boot-admin-server:2.7.10")
     compileOnly("org.springframework.boot:spring-boot-starter-web:2.7.7")

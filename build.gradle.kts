@@ -2,5 +2,5 @@ plugins {
     id("java")
 }
 
-group = "org.example"
+group = "com.github.alexeylapin.sbapsd"
 version = "1.0-SNAPSHOT"
