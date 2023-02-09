@@ -1,9 +1,10 @@
 plugins {
-    id("java")
+    id("java-base-conventions")
 }
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 val ver = "3.0.0"
@@ -14,8 +15,4 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
-}
-
-tasks.getByName<Test>("test") {
-    useJUnitPlatform()
 }

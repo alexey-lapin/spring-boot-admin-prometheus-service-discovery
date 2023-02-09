@@ -34,5 +34,5 @@ jobs:
         with:
           name: app-jar
           path: |
-            sbapsd-app/build/libs/sbapsd-app.jar
+            sbapsd-app/build/libs/sbapsd-app-*.jar
           retention-days: 5
