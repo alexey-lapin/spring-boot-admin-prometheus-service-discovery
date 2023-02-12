@@ -1,12 +1,19 @@
 package com.github.alexeylapin.sbapsd.config;
 
 import com.github.alexeylapin.sbapsd.service.InstanceProvider;
-import com.github.alexeylapin.sbapsd.service.ServerAccessorRegistry;
-import com.github.alexeylapin.sbapsd.service.WebInstanceProvider;
+import com.github.alexeylapin.sbapsd.service.InstanceProviderRegistry;
+import com.github.alexeylapin.sbapsd.service.factory.CompositeInstanceProviderFactory;
+import com.github.alexeylapin.sbapsd.service.factory.InstanceProviderFactory;
+import com.github.alexeylapin.sbapsd.service.factory.V2ApplicationRegistryInstanceProviderFactory;
+import com.github.alexeylapin.sbapsd.service.factory.V2WebInstanceProviderFactory;
 import com.github.alexeylapin.sbapsd.web.InstanceController;
 import com.github.alexeylapin.sbapsd.web.ReactiveHandlerMapping;
 import com.github.alexeylapin.sbapsd.web.ServletHandlerMapping;
+import de.codecentric.boot.admin.server.services.ApplicationRegistry;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -14,26 +21,52 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.reactive.accept.RequestedContentTypeResolver;
-import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @EnableConfigurationProperties(PrometheusServiceDiscoveryProperties.class)
 @Configuration(proxyBeanMethods = false)
 public class Config {
 
     @Bean
-    public ServerAccessorRegistry serverAccessorRegistry(PrometheusServiceDiscoveryProperties properties) {
-        return new ServerAccessorRegistry(properties.getServers());
+    public InstanceProviderFactory compositeInstanceProviderFactory(List<InstanceProviderFactory> factories) {
+        return new CompositeInstanceProviderFactory(factories);
     }
 
     @Bean
-    public InstanceProvider instanceProvider() {
-        WebClient webClient = WebClient.create("http://localhost:8080");
-        return new WebInstanceProvider(webClient);
+    public InstanceProviderFactory v2WebInstanceProviderFactory() {
+        return new V2WebInstanceProviderFactory();
+    }
+
+    @ConditionalOnClass(ApplicationRegistry.class)
+    @Configuration(proxyBeanMethods = false)
+    public static class V2ApplicationRegistryConfiguration {
+
+        @ConditionalOnBean(ApplicationRegistry.class)
+        @Bean
+        public InstanceProviderFactory v2ApplicationRegistryInstanceProviderFactory(ApplicationRegistry applicationRegistry) {
+            return new V2ApplicationRegistryInstanceProviderFactory(applicationRegistry);
+        }
+
     }
 
     @Bean
-    public InstanceController instanceController(InstanceProvider instanceProvider) {
-        return new InstanceController(instanceProvider);
+    public InstanceProviderRegistry instanceProviderRegistry(PrometheusServiceDiscoveryProperties properties,
+                                                             CompositeInstanceProviderFactory instanceProviderFactory) {
+        Map<String, InstanceProviderDef> servers = properties.getServers();
+        ConcurrentHashMap<String, InstanceProvider> map = new ConcurrentHashMap<>();
+        for (Map.Entry<String, InstanceProviderDef> entry : servers.entrySet()) {
+            InstanceProvider instanceProvider = instanceProviderFactory.create(entry.getValue());
+            map.put(entry.getKey(), instanceProvider);
+        }
+        return new InstanceProviderRegistry(map);
+    }
+
+    @Bean
+    public InstanceController instanceController(InstanceProviderRegistry InstanceProviderRegistry) {
+        return new InstanceController(InstanceProviderRegistry);
     }
 
     @Configuration(proxyBeanMethods = false)

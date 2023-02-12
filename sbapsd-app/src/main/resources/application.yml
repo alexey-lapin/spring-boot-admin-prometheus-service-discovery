@@ -1,2 +1,23 @@
 server:
   port: 8081
+
+sbapsd:
+  servers:
+    s1:
+      type: web-v2
+      params:
+        url: http://localhost:8080
+      filters:
+        - type: name
+          value: some-app-.*
+        - type: tags
+          value:
+        - type: status
+          value: UP,DOWN
+    s2:
+      type: web-v2
+      params:
+        url: http://localhost:8080
+      labels:
+        l1: v1
+        l2: v2
