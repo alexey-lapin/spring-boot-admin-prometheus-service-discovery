@@ -7,7 +7,7 @@ public class ReactiveHandlerMapping extends RequestMappingHandlerMapping {
 
     @Override
     protected boolean isHandler(Class<?> beanType) {
-        return AnnotatedElementUtils.hasAnnotation(beanType, ServiceDiscoveryController.class);
+        return AnnotatedElementUtils.hasAnnotation(beanType, ServiceDiscoveryControllerMarker.class);
     }
 
 }

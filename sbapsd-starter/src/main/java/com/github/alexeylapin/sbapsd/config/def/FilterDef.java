@@ -1,4 +1,4 @@
-package com.github.alexeylapin.sbapsd.config;
+package com.github.alexeylapin.sbapsd.config.def;
 
 import lombok.Data;
 

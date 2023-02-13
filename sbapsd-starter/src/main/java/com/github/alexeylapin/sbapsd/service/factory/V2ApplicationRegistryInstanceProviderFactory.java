@@ -1,6 +1,6 @@
 package com.github.alexeylapin.sbapsd.service.factory;
 
-import com.github.alexeylapin.sbapsd.config.InstanceProviderDef;
+import com.github.alexeylapin.sbapsd.config.def.InstanceProviderDef;
 import com.github.alexeylapin.sbapsd.service.InstanceProvider;
 import com.github.alexeylapin.sbapsd.service.v2.V2ApplicationRegistryInstanceProvider;
 import de.codecentric.boot.admin.server.services.ApplicationRegistry;

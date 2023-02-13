@@ -1,12 +1,11 @@
 package com.github.alexeylapin.sbapsd.app;
 
-import com.github.alexeylapin.sbapsd.config.Config;
+import com.github.alexeylapin.sbapsd.config.EnableAdminServerServiceDiscovery;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Import(Config.class)
+@EnableAdminServerServiceDiscovery
 public class App {
 
     public static void main(String[] args) {

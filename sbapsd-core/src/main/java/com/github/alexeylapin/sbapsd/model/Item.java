@@ -5,6 +5,9 @@ import java.util.Map;
 
 public class Item {
 
+    public Item() {
+    }
+
     public Item(List<String> targets, Map<String, String> labels) {
         this.targets = targets;
         this.labels = labels;

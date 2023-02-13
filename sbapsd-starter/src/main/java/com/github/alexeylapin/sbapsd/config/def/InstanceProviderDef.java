@@ -1,5 +1,6 @@
-package com.github.alexeylapin.sbapsd.config;
+package com.github.alexeylapin.sbapsd.config.def;
 
+import com.github.alexeylapin.sbapsd.config.def.FilterDef;
 import lombok.Data;
 
 import java.util.ArrayList;
