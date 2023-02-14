@@ -1,17 +1,20 @@
 package com.github.alexeylapin.sbapsd.config;
 
-import com.github.alexeylapin.sbapsd.config.def.InstanceProviderDef;
-import com.github.alexeylapin.sbapsd.service.InstanceProvider;
-import com.github.alexeylapin.sbapsd.service.InstanceProviderRegistry;
+import com.github.alexeylapin.sbapsd.service.ServiceProvider;
+import com.github.alexeylapin.sbapsd.service.ServiceProviderRegistry;
 import com.github.alexeylapin.sbapsd.service.factory.CompositeInstanceProviderFactory;
+import com.github.alexeylapin.sbapsd.service.factory.DefaultFilterFactory;
+import com.github.alexeylapin.sbapsd.service.factory.DefaultServiceProviderFactory;
+import com.github.alexeylapin.sbapsd.service.factory.FilterFactory;
 import com.github.alexeylapin.sbapsd.service.factory.InstanceProviderFactory;
-import com.github.alexeylapin.sbapsd.service.factory.V2ApplicationRegistryInstanceProviderFactory;
+import com.github.alexeylapin.sbapsd.service.factory.ServiceProviderFactory;
+import com.github.alexeylapin.sbapsd.service.factory.V2InstanceRegistryInstanceProviderFactory;
 import com.github.alexeylapin.sbapsd.service.factory.V2WebInstanceProviderFactory;
-import com.github.alexeylapin.sbapsd.web.ServiceDiscoveryController;
 import com.github.alexeylapin.sbapsd.web.ReactiveHandlerMapping;
+import com.github.alexeylapin.sbapsd.web.ServiceDiscoveryController;
 import com.github.alexeylapin.sbapsd.web.ServletHandlerMapping;
 import de.codecentric.boot.admin.server.config.AdminServerAutoConfiguration;
-import de.codecentric.boot.admin.server.services.ApplicationRegistry;
+import de.codecentric.boot.admin.server.services.InstanceRegistry;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -24,9 +27,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.reactive.accept.RequestedContentTypeResolver;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @ConditionalOnBean(ServiceDiscoveryMarkerConfiguration.Marker.class)
 @AutoConfigureAfter(AdminServerAutoConfiguration.class)
@@ -34,16 +37,16 @@ import java.util.concurrent.ConcurrentHashMap;
 @EnableConfigurationProperties(ServiceDiscoveryProperties.class)
 public class ServiceDiscoveryAutoConfiguration {
 
-    @ConditionalOnClass(ApplicationRegistry.class)
+    @ConditionalOnClass(InstanceRegistry.class)
     @Configuration(proxyBeanMethods = false)
-    public static class V2ApplicationRegistryConfiguration {
+    public static class V2InstanceRegistryConfiguration {
 
-        @ConditionalOnBean(ApplicationRegistry.class)
+        @ConditionalOnBean(InstanceRegistry.class)
         @ConditionalOnMissingBean
         @Bean
-        public V2ApplicationRegistryInstanceProviderFactory v2ApplicationRegistryInstanceProviderFactory(
-                ApplicationRegistry applicationRegistry) {
-            return new V2ApplicationRegistryInstanceProviderFactory(applicationRegistry);
+        public V2InstanceRegistryInstanceProviderFactory v2InstanceRegistryInstanceProviderFactory(
+                InstanceRegistry instanceRegistry) {
+            return new V2InstanceRegistryInstanceProviderFactory(instanceRegistry);
         }
 
     }
@@ -62,20 +65,29 @@ public class ServiceDiscoveryAutoConfiguration {
 
     @ConditionalOnMissingBean
     @Bean
-    public InstanceProviderRegistry instanceProviderRegistry(ServiceDiscoveryProperties properties,
-                                                             CompositeInstanceProviderFactory instanceProviderFactory) {
-        Map<String, InstanceProvider> map = new ConcurrentHashMap<>();
-        for (Map.Entry<String, InstanceProviderDef> entry : properties.getServers().entrySet()) {
-            InstanceProvider instanceProvider = instanceProviderFactory.create(entry.getValue());
-            map.put(entry.getKey(), instanceProvider);
-        }
-        return new InstanceProviderRegistry(map);
+    public DefaultFilterFactory filterFactory() {
+        return new DefaultFilterFactory();
     }
 
     @ConditionalOnMissingBean
     @Bean
-    public ServiceDiscoveryController instanceController(InstanceProviderRegistry InstanceProviderRegistry) {
-        return new ServiceDiscoveryController(InstanceProviderRegistry);
+    public ServiceProviderFactory serviceProviderFactory(InstanceProviderFactory compositeInstanceProviderFactory,
+                                                         FilterFactory filterFactory) {
+        return new DefaultServiceProviderFactory(compositeInstanceProviderFactory, filterFactory);
+    }
+
+    @ConditionalOnMissingBean
+    @Bean
+    public ServiceProviderRegistry serviceProviderRegistry(ServiceDiscoveryProperties properties,
+                                                           ServiceProviderFactory serviceProviderFactory) {
+        Map<String, ServiceProvider> map = serviceProviderFactory.createAll(properties.getServers());
+        return new ServiceProviderRegistry(Collections.unmodifiableMap(map));
+    }
+
+    @ConditionalOnMissingBean
+    @Bean
+    public ServiceDiscoveryController serviceDiscoveryController(ServiceProviderRegistry serviceProviderRegistry) {
+        return new ServiceDiscoveryController(serviceProviderRegistry);
     }
 
     @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)

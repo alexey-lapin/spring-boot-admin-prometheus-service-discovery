@@ -1,7 +1,7 @@
 package com.github.alexeylapin.sbapsd.web;
 
-import com.github.alexeylapin.sbapsd.model.Item;
-import com.github.alexeylapin.sbapsd.service.InstanceProviderRegistry;
+import com.github.alexeylapin.sbapsd.model.Service;
+import com.github.alexeylapin.sbapsd.service.ServiceProviderRegistry;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,18 +14,18 @@ import reactor.core.publisher.Flux;
 @ResponseBody
 public class ServiceDiscoveryController {
 
-    private final InstanceProviderRegistry instanceProviderRegistry;
+    private final ServiceProviderRegistry serviceProviderRegistry;
 
-    public ServiceDiscoveryController(InstanceProviderRegistry instanceProviderRegistry) {
-        this.instanceProviderRegistry = instanceProviderRegistry;
+    public ServiceDiscoveryController(ServiceProviderRegistry serviceProviderRegistry) {
+        this.serviceProviderRegistry = serviceProviderRegistry;
     }
 
     @GetMapping(path = "/service-discovery/prometheus/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Flux<Item> getInstances(@PathVariable String name) {
-        return instanceProviderRegistry.findInstanceProvider(name)
+    public Flux<Service> getServices(@PathVariable String name) {
+        return serviceProviderRegistry.findServiceProvider(name)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND.value(),
-                        "instance provider '" + name + "' is not found", null))
-                .getItems();
+                        "service provider '" + name + "' is not found", null))
+                .getServices();
     }
 
 }

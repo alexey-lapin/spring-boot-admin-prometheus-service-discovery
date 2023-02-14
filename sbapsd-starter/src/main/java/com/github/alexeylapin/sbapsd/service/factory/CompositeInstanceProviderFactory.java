@@ -1,6 +1,6 @@
 package com.github.alexeylapin.sbapsd.service.factory;
 
-import com.github.alexeylapin.sbapsd.config.def.InstanceProviderDef;
+import com.github.alexeylapin.sbapsd.config.def.ServiceProviderDef;
 import com.github.alexeylapin.sbapsd.service.InstanceProvider;
 
 import java.util.List;
@@ -23,13 +23,13 @@ public class CompositeInstanceProviderFactory implements InstanceProviderFactory
     }
 
     @Override
-    public InstanceProvider create(InstanceProviderDef instanceProviderDef) {
-        String type = instanceProviderDef.getType();
+    public InstanceProvider create(ServiceProviderDef serviceProviderDef) {
+        String type = serviceProviderDef.getType();
         InstanceProviderFactory instanceProviderFactory = factories.get(type);
         if (instanceProviderFactory == null) {
             throw new IllegalArgumentException("unknown instance provider type: " + type);
         }
-        return instanceProviderFactory.create(instanceProviderDef);
+        return instanceProviderFactory.create(serviceProviderDef);
     }
 
 }

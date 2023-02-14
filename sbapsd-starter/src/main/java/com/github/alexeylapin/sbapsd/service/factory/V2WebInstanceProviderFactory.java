@@ -1,6 +1,6 @@
 package com.github.alexeylapin.sbapsd.service.factory;
 
-import com.github.alexeylapin.sbapsd.config.def.InstanceProviderDef;
+import com.github.alexeylapin.sbapsd.config.def.ServiceProviderDef;
 import com.github.alexeylapin.sbapsd.service.InstanceProvider;
 import com.github.alexeylapin.sbapsd.service.v2.V2WebInstanceProvider;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunctions;
@@ -16,8 +16,8 @@ public class V2WebInstanceProviderFactory implements InstanceProviderFactory {
     }
 
     @Override
-    public InstanceProvider create(InstanceProviderDef instanceProviderDef) {
-        Map<String, String> params = instanceProviderDef.getParams();
+    public InstanceProvider create(ServiceProviderDef serviceProviderDef) {
+        Map<String, String> params = serviceProviderDef.getParams();
         String url = params.get("url");
         WebClient.Builder builder = WebClient.builder().baseUrl(url);
         String username = params.get("username");
@@ -25,7 +25,7 @@ public class V2WebInstanceProviderFactory implements InstanceProviderFactory {
         if (username != null && password != null) {
             builder.filter(ExchangeFilterFunctions.basicAuthentication(username, password));
         }
-        return new V2WebInstanceProvider(item -> true, instanceProviderDef.getLabels(), builder.build());
+        return new V2WebInstanceProvider(builder.build());
     }
 
 }

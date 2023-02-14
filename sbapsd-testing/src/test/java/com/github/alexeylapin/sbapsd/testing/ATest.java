@@ -1,7 +1,7 @@
 package com.github.alexeylapin.sbapsd.testing;
 
 import com.github.alexeylapin.sbapsd.config.EnableAdminServerServiceDiscovery;
-import com.github.alexeylapin.sbapsd.model.Item;
+import com.github.alexeylapin.sbapsd.model.Service;
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import de.codecentric.boot.admin.server.domain.values.InstanceId;
 import de.codecentric.boot.admin.server.domain.values.Registration;
@@ -51,7 +51,7 @@ public class ATest {
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful()
-                .expectBodyList(Item.class)
+                .expectBodyList(Service.class)
                 .hasSize(1);
     }
 

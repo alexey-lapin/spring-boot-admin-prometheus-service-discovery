@@ -1,41 +1,36 @@
 package com.github.alexeylapin.sbapsd.service.v2;
 
-import com.github.alexeylapin.sbapsd.model.Item;
-import com.github.alexeylapin.sbapsd.service.AbstractInstanceProvider;
+import com.github.alexeylapin.sbapsd.model.Instance;
+import com.github.alexeylapin.sbapsd.service.InstanceProvider;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
-import java.util.List;
-import java.util.Map;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
-public class V2WebInstanceProvider extends AbstractInstanceProvider {
+public class V2WebInstanceProvider implements InstanceProvider {
 
     private final WebClient client;
 
-    public V2WebInstanceProvider(Predicate<Item> filter, Map<String, String> labels, WebClient client) {
-        super(filter, labels);
+    public V2WebInstanceProvider(WebClient client) {
         this.client = client;
     }
 
     @Override
-    public Flux<Item> getItems() {
+    public Flux<Instance> getInstances() {
         return client.get()
-                .uri("/applications")
+                .uri("/instances")
                 .accept(MediaType.APPLICATION_JSON)
-                .exchangeToFlux(response -> response.bodyToFlux(V2Application.class))
-                .map(this::convert)
-                .filter(getFilter());
+                .exchangeToFlux(response -> response.bodyToFlux(V2Instance.class))
+                .map(this::convert);
     }
 
-    private Item convert(V2Application application) {
-        List<String> targets = application.getInstances().stream()
-                .map(item -> item.getRegistration().getServiceUrl())
-                .collect(Collectors.toList());
-        getLabels().put("__app_name", application.getName());
-        return new Item(targets, getLabels());
+    private Instance convert(V2Instance instance) {
+        return Instance.builder()
+                .name(instance.getRegistration().getName())
+                .url(instance.getRegistration().getServiceUrl())
+                .status(instance.getStatusInfo().getStatus())
+                .tags(instance.getTags())
+                .metadata(instance.getRegistration().getMetadata())
+                .build();
     }
 
 }

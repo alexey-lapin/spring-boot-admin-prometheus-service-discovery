@@ -1,57 +1,30 @@
 package com.github.alexeylapin.sbapsd.service.v2;
 
+import lombok.Data;
+
+import java.util.Map;
+
+@Data
 public class V2Instance {
 
     private Registration registration;
     private StatusInfo statusInfo;
+    private Map<String, String> tags;
 
-    public Registration getRegistration() {
-        return registration;
-    }
-
-    public void setRegistration(Registration registration) {
-        this.registration = registration;
-    }
-
-    public StatusInfo getStatusInfo() {
-        return statusInfo;
-    }
-
-    public void setStatusInfo(StatusInfo statusInfo) {
-        this.statusInfo = statusInfo;
-    }
-
+    @Data
     public static class Registration {
+
         private String name;
         private String serviceUrl;
+        private Map<String, String> metadata;
 
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getServiceUrl() {
-            return serviceUrl;
-        }
-
-        public void setServiceUrl(String serviceUrl) {
-            this.serviceUrl = serviceUrl;
-        }
     }
 
+    @Data
     public static class StatusInfo {
+
         private String status;
 
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
     }
 
 }
