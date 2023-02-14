@@ -14,7 +14,9 @@ publishing {
     repositories {
         maven {
             name = "OSSRH"
-            setUrl("https://oss.sonatype.org/service/local/staging/deploy/maven2")
+            val snapshotUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+            val stagingUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            setUrl(if (version.toString().endsWith("SNAPSHOT")) snapshotUrl else stagingUrl)
             credentials {
                 username = System.getenv("OSSRH_USER") ?: return@credentials
                 password = System.getenv("OSSRH_PASSWORD") ?: return@credentials
