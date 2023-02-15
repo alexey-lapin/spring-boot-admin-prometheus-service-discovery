@@ -1,0 +1,9 @@
+server:
+  port: 0
+
+spring:
+  boot:
+    admin:
+      url: "http://localhost:${sba.server.port}"
+  jmx:
+    enabled: false

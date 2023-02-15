@@ -5,6 +5,11 @@ plugins {
     id("java-base-conventions")
 }
 
+java{
+    withJavadocJar()
+    withSourcesJar()
+}
+
 publishing {
     publications {
         create<MavenPublication>("maven") {

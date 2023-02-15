@@ -1,0 +1,14 @@
+server:
+  port: ${sba.server.port}
+
+sbapsd:
+  servers:
+    s1:
+      type: registry-v2
+      labels:
+        __l1: v1
+        __l2: v2
+      filters:
+        - type: status
+          params:
+            value: UP
