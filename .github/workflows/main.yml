@@ -30,16 +30,15 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Gradle run server
-#        run: nohup ./gradlew runV1SBAServer -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8081 &
-        run: ./gradlew runV1SBAServer -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8081
+        run: nohup ./gradlew runV1SBAServer -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8081 &
 
       - name: Await server up
         uses: cygnetdigital/wait_for_response@v2.0.0
         with:
           url: http://localhost:8081/actuator/health
           responseCode: 200,500
-          timeout: 60000
-          interval: 500
+          timeout: 120000
+          interval: 1000
 
       - name: Gradle test
         run: ./gradlew :sbapsd-testing:test -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8081
@@ -71,8 +70,8 @@ jobs:
         with:
           url: http://localhost:8082/actuator/health
           responseCode: 200,500
-          timeout: 60000
-          interval: 500
+          timeout: 120000
+          interval: 1000
 
       - name: Gradle test
         run: ./gradlew :sbapsd-testing:test -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8082
@@ -104,8 +103,8 @@ jobs:
         with:
           url: http://localhost:8083/actuator/health
           responseCode: 200,500
-          timeout: 60000
-          interval: 500
+          timeout: 120000
+          interval: 1000
 
       - name: Gradle test
         run: ./gradlew :sbapsd-testing:test -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8083
