@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ '2.7.10' ]
+        sba-version: [ '2.7.10' ]
     steps:
       - name: Checkout project sources
         uses: actions/checkout@v3
@@ -30,7 +30,8 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Gradle run server
-        run: nohup ./gradlew runV2SBAServer -Psba.version=${{ matrix.java }} -Psba.server.port=8082 &
+#        run: nohup ./gradlew runV2SBAServer -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8082 &
+        run: ./gradlew runV2SBAServer -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8082
 
       - name: Await server up
         uses: cygnetdigital/wait_for_response@v2.0.0
