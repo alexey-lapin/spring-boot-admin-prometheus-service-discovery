@@ -20,6 +20,7 @@ dependencies {
 }
 
 tasks.getByName<Test>("test") {
+    onlyIf { findProperty("sba.server.port") != null }
     systemProperty("sba.server.port", findProperty("sba.server.port") ?: "8080")
     testLogging {
         events(TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED)
