@@ -1,40 +1,17 @@
 package com.github.alexeylapin.sbapsd.testing;
 
 import com.github.alexeylapin.sbapsd.model.Service;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-@WebFluxTest
-public class WebTest {
+public abstract class RestApiTestSupport {
 
-    @Configuration(proxyBeanMethods = false)
-    public static class WebTestClientConfig {
-
-        @Bean
-        public WebTestClient webTestClient(@Value("${sba.server.port}") String sbaServerPort) {
-            return WebTestClient.bindToServer()
-                    .baseUrl("http://localhost:" + sbaServerPort)
-                    .build();
-        }
-
-    }
-
-    @Autowired
-    private WebTestClient client;
-
-    @Test
-    void should_returnCorrectServiceList_when_requestingEndpointWithNoFilters() {
+    static void assertCallWithNoFilters(WebTestClient client, String url) {
         client.get()
-                .uri("/service-discovery/prometheus/s1")
+                .uri(url)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus()
@@ -49,10 +26,9 @@ public class WebTest {
                 ));
     }
 
-    @Test
-    void should_returnCorrectServiceList_when_requestingEndpointWithStatusFilter() {
+    static void assertCallWithStatusFilter(WebTestClient client, String url) {
         client.get()
-                .uri("/service-discovery/prometheus/s2")
+                .uri(url)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus()
@@ -67,10 +43,9 @@ public class WebTest {
                 ));
     }
 
-    @Test
-    void should_returnCorrectServiceList_when_requestingEndpointWithAppNameFilter() {
+    static void assertCallWithAppNameFilter(WebTestClient client, String url) {
         client.get()
-                .uri("/service-discovery/prometheus/s3")
+                .uri(url)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus()
@@ -86,10 +61,9 @@ public class WebTest {
                 ));
     }
 
-    @Test
-    void should_returnCorrectServiceList_when_requestingEndpointWithAppNameAndStatusFilter() {
+    static void assertCallWithAppNameAndStatusFilter(WebTestClient client, String url) {
         client.get()
-                .uri("/service-discovery/prometheus/s4")
+                .uri(url)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus()

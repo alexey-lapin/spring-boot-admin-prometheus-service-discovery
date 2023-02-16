@@ -8,6 +8,7 @@ import com.github.alexeylapin.sbapsd.service.factory.DefaultServiceProviderFacto
 import com.github.alexeylapin.sbapsd.service.factory.FilterFactory;
 import com.github.alexeylapin.sbapsd.service.factory.InstanceProviderFactory;
 import com.github.alexeylapin.sbapsd.service.factory.ServiceProviderFactory;
+import com.github.alexeylapin.sbapsd.service.factory.V1WebInstanceProviderFactory;
 import com.github.alexeylapin.sbapsd.service.factory.V2InstanceRegistryInstanceProviderFactory;
 import com.github.alexeylapin.sbapsd.service.factory.V2WebInstanceProviderFactory;
 import com.github.alexeylapin.sbapsd.web.ReactiveHandlerMapping;
@@ -48,6 +49,12 @@ public class ServiceDiscoveryAutoConfiguration {
             return new V2InstanceRegistryInstanceProviderFactory(instanceRegistry);
         }
 
+    }
+
+    @ConditionalOnMissingBean
+    @Bean
+    public V1WebInstanceProviderFactory v1WebInstanceProviderFactory() {
+        return new V1WebInstanceProviderFactory();
     }
 
     @ConditionalOnMissingBean
