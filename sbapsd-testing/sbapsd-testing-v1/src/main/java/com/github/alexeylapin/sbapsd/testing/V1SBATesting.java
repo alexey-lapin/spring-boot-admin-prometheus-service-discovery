@@ -17,6 +17,9 @@ public class V1SBATesting {
                 .sibling(V1SBAClient.class).profiles("client").properties(
                         "spring.application.name=app-2",
                         "sba.client.status=OUT_OF_SERVICE")
+                .sibling(V1SBAClient.class).profiles("client").properties(
+                        "spring.application.name=app-3",
+                        "sba.client.status=UP")
                 .run(args);
     }
 

@@ -13,7 +13,6 @@ import com.github.alexeylapin.sbapsd.service.factory.V2WebInstanceProviderFactor
 import com.github.alexeylapin.sbapsd.web.ReactiveHandlerMapping;
 import com.github.alexeylapin.sbapsd.web.ServiceDiscoveryController;
 import com.github.alexeylapin.sbapsd.web.ServletHandlerMapping;
-import de.codecentric.boot.admin.server.config.AdminServerAutoConfiguration;
 import de.codecentric.boot.admin.server.services.InstanceRegistry;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -32,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 @ConditionalOnBean(ServiceDiscoveryMarkerConfiguration.Marker.class)
-@AutoConfigureAfter(AdminServerAutoConfiguration.class)
+@AutoConfigureAfter(name = "de.codecentric.boot.admin.server.config.AdminServerAutoConfiguration")
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(ServiceDiscoveryProperties.class)
 public class ServiceDiscoveryAutoConfiguration {

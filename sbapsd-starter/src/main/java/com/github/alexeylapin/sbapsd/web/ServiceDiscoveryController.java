@@ -21,7 +21,7 @@ public class ServiceDiscoveryController {
     }
 
     @GetMapping(path = "/service-discovery/prometheus/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Flux<Service> getServices(@PathVariable String name) {
+    public Flux<Service> getServices(@PathVariable("name") String name) {
         return serviceProviderRegistry.findServiceProvider(name)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND.value(),
                         "service provider '" + name + "' is not found", null))
