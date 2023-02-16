@@ -1,4 +1,4 @@
-package com.github.alexey.lapin.sbapsd.testing;
+package com.github.alexeylapin.sbapsd.testing;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 

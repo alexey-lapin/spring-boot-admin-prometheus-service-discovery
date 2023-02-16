@@ -1,4 +1,4 @@
-package com.github.alexey.lapin.sbapsd.testing;
+package com.github.alexeylapin.sbapsd.testing;
 
 import com.github.alexeylapin.sbapsd.config.EnableAdminServerServiceDiscovery;
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
