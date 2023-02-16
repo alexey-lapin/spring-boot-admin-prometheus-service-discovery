@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        sba-version: [ '2.7.10' ]
+        sba-version: [ '2.4.4', '2.5.6', '2.6.11', '2.7.10' ]
     steps:
       - name: Checkout project sources
         uses: actions/checkout@v3
@@ -43,9 +43,41 @@ jobs:
       - name: Gradle test
         run: ./gradlew :sbapsd-testing:test -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8082
 
+  test-v3:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sba-version: [ '3.0.0' ]
+    steps:
+      - name: Checkout project sources
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Gradle run server
+        run: nohup ./gradlew runV3SBAServer -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8083 &
+
+      - name: Await server up
+        uses: cygnetdigital/wait_for_response@v2.0.0
+        with:
+          url: http://localhost:8083/actuator/health
+          responseCode: 200,500
+          timeout: 60000
+          interval: 500
+
+      - name: Gradle test
+        run: ./gradlew :sbapsd-testing:test -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8083
+
   build:
     runs-on: ubuntu-latest
-    needs: [test-v2]
+    needs: [test-v2, test-v3]
     steps:
       - name: Checkout project sources
         uses: actions/checkout@v3
