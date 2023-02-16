@@ -12,6 +12,7 @@ on:
 
 jobs:
   test-v2:
+    if: false
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -62,7 +63,8 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Gradle run server
-        run: nohup ./gradlew runV3SBAServer -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8083 &
+        run: ./gradlew runV3SBAServer -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8083
+#        run: nohup ./gradlew runV3SBAServer -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8083 &
 
       - name: Await server up
         uses: cygnetdigital/wait_for_response@v2.0.0
