@@ -157,8 +157,8 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-      - name: Gradle compileNative
-        run: ./gradlew compileNative
+      - name: Gradle nativeCompile
+        run: ./gradlew nativeCompile
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
