@@ -33,7 +33,7 @@ jobs:
         run: ./gradlew runV1SBAServer -Psba.version=${{ matrix.java }} -Psba.server.port=8082
 
       - name: Await server up
-        uses: cygnetdigital/wait_for_response@2.0.0
+        uses: cygnetdigital/wait_for_response@v2.0.0
         with:
           url: http://localhost:8082/actuator/health
           responseCode: 200,500
