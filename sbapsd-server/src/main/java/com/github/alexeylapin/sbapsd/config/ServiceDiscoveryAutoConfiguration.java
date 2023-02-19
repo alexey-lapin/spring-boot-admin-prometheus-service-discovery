@@ -77,7 +77,7 @@ public class ServiceDiscoveryAutoConfiguration {
 
     @ConditionalOnMissingBean
     @Bean
-    public ServiceProviderFactory serviceProviderFactory(InstanceProviderFactory compositeInstanceProviderFactory,
+    public ServiceProviderFactory serviceProviderFactory(CompositeInstanceProviderFactory compositeInstanceProviderFactory,
                                                          FilterFactory filterFactory) {
         return new DefaultServiceProviderFactory(compositeInstanceProviderFactory, filterFactory);
     }
