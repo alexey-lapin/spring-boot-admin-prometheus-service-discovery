@@ -3,8 +3,6 @@ plugins {
 }
 
 dependencies {
-    api(project(":sbapsd-core"))
-
     annotationProcessor("org.projectlombok:lombok:1.18.26")
     compileOnly("org.projectlombok:lombok:1.18.26")
 

@@ -5,8 +5,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "spring-boot-admin-prometheus-sd"
-include("sbapsd-core")
-include("sbapsd-starter")
+include("sbapsd-server")
 include("sbapsd-testing")
 if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_17)) {
     include("sbapsd-app")

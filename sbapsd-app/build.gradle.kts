@@ -10,7 +10,7 @@ java {
 }
 
 dependencies {
-    implementation(project(":sbapsd-starter"))
+    implementation(project(":sbapsd-server"))
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 

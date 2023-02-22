@@ -8,7 +8,7 @@ java {
 }
 
 dependencies {
-    implementation(project(":sbapsd-starter"))
+    implementation(project(":sbapsd-server"))
 
     if (isSBAVersion3()) {
         implementation("de.codecentric:spring-boot-admin-starter-server:${getSBAVersion()}")

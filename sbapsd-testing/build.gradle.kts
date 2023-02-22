@@ -10,7 +10,7 @@ java {
 }
 
 dependencies {
-    testImplementation(project(":sbapsd-starter"))
+    testImplementation(project(":sbapsd-server"))
 
     testImplementation("org.springframework.boot:spring-boot-starter-webflux:2.7.7")
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.7.7")
