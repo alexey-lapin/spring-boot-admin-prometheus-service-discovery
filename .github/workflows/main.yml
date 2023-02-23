@@ -159,7 +159,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: app-native
+          name: app-native-linux
           path: |
             sbapsd-app/build/native/nativeCompile
           retention-days: 5
@@ -177,6 +177,22 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+
+      - name: Prepare Artifacts
+        run: |
+          cd app-native-linux
+          tar -czf sbapsd-${GITHUB_REF_NAME}.tar.gz sbapsd
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          files: |
+            app-jar/sbapsd-app-*.jar
+            app-native-linux/sbapsd-*.tar.gz
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2

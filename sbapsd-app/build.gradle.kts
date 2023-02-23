@@ -10,6 +10,14 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
+graalvmNative {
+    binaries {
+        named("main") {
+            imageName.set("sbapsd")
+        }
+    }
+}
+
 dependencies {
     implementation(project(":sbapsd-server"))
     implementation("org.springframework.boot:spring-boot-starter-webflux")
