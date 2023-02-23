@@ -1,0 +1,35 @@
+[
+  {
+    "name": "com.github.alexeylapin.sbapsd.service.v2.V2Instance",
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "getRegistration",
+        "parameterTypes": []
+      },
+      {
+        "name": "getStatusInfo",
+        "parameterTypes": []
+      },
+      {
+        "name": "getTags",
+        "parameterTypes": []
+      },
+      {
+        "name": "setRegistration",
+        "parameterTypes": ["com.github.alexeylapin.sbapsd.service.v2.V2Instance$Registration"]
+      },
+      {
+        "name": "setStatusInfo",
+        "parameterTypes": ["com.github.alexeylapin.sbapsd.service.v2.V2Instance$StatusInfo"]
+      },
+      {
+        "name": "setTags",
+        "parameterTypes": ["java.util.Map"]
+      }
+    ]
+  }
+]
