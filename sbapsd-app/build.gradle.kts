@@ -33,16 +33,16 @@ tasks.getByName<Test>("test") {
     useJUnitPlatform()
 }
 
-val writeVersionFile by tasks.registering {
+val writeArtifactFile by tasks.registering {
     doLast {
         val outputDirectory = tasks.getByName<BuildNativeImageTask>("nativeCompile").outputDirectory
         outputDirectory.get().asFile.mkdirs()
-        outputDirectory.file("version.txt")
+        outputDirectory.file("gradle-artifact.txt")
             .get().asFile
-            .writeText(project.version.toString())
+            .writeText("${project.name}-${project.version}")
     }
 }
 
 tasks.getByName("nativeCompile") {
-    finalizedBy(writeVersionFile)
+    finalizedBy(writeArtifactFile)
 }

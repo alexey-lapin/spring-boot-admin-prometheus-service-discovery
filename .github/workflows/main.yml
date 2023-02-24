@@ -184,13 +184,13 @@ jobs:
       - name: Prepare Artifacts
         run: |
           cd app-native-linux
-          tar -czf sbapsd-$(cat version.txt)-linux.tar.gz sbapsd
+          tar -czf $(cat gradle-artifact.txt)-linux.tar.gz sbapsd
 
       - name: Build Release Changelog
         id: build-release-changelog
         uses: mikepenz/release-changelog-builder-action@v3
-        #        with:
-        #          configuration: ".github/release-changelog-builder.json"
+        with:
+          configuration: ".github/release-changelog-builder.json"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
