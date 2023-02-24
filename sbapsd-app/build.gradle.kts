@@ -1,3 +1,5 @@
+import org.graalvm.buildtools.gradle.tasks.BuildNativeImageTask
+
 plugins {
     id("java")
     id("org.springframework.boot") version "3.0.2"
@@ -29,4 +31,18 @@ dependencies {
 
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
+}
+
+val writeVersionFile by tasks.registering {
+    doLast {
+        val outputDirectory = tasks.getByName<BuildNativeImageTask>("nativeCompile").outputDirectory
+        outputDirectory.get().asFile.mkdirs()
+        outputDirectory.file("version.txt")
+            .get().asFile
+            .writeText(project.version.toString())
+    }
+}
+
+tasks.getByName("nativeCompile") {
+    finalizedBy(writeVersionFile)
 }
