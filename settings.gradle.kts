@@ -4,7 +4,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "spring-boot-admin-prometheus-sd"
+rootProject.name = "spring-boot-admin-prometheus-service-discovery"
 
 include("sbapsd-server")
 include("sbapsd-testing")

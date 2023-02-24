@@ -37,7 +37,7 @@ jobs:
         with:
           url: http://localhost:8081/health
           responseCode: 200,500
-          timeout: 120000
+          timeout: 300000
           interval: 1000
 
       - name: Gradle test
@@ -69,7 +69,7 @@ jobs:
         with:
           url: http://localhost:8082/actuator/health
           responseCode: 200,500
-          timeout: 120000
+          timeout: 300000
           interval: 1000
 
       - name: Gradle test
@@ -101,7 +101,7 @@ jobs:
         with:
           url: http://localhost:8083/actuator/health
           responseCode: 200,500
-          timeout: 120000
+          timeout: 300000
           interval: 1000
 
       - name: Gradle test
