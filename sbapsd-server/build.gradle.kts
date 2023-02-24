@@ -2,6 +2,8 @@ plugins {
     id("java-library-conventions")
 }
 
+description = "Spring Boot Admin Prometheus Service Discovery Server"
+
 dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.26")
     compileOnly("org.projectlombok:lombok:1.18.26")

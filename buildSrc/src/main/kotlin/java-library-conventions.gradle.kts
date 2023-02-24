@@ -5,7 +5,7 @@ plugins {
     id("java-base-conventions")
 }
 
-java{
+java {
     withJavadocJar()
     withSourcesJar()
 }
@@ -14,17 +14,28 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             from(components["java"])
-        }
-    }
-    repositories {
-        maven {
-            name = "OSSRH"
-            val snapshotUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
-            val stagingUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-            setUrl(if (version.toString().endsWith("SNAPSHOT")) snapshotUrl else stagingUrl)
-            credentials {
-                username = System.getenv("OSSRH_USER") ?: return@credentials
-                password = System.getenv("OSSRH_PASSWORD") ?: return@credentials
+            pom {
+                name.set(project.name)
+                description.set(provider { project.description })
+                url.set("https://github.com/alexey-lapin/spring-boot-admin-prometheus-service-discovery")
+                licenses {
+                    license {
+                        name.set("MIT")
+                        url.set("https://opensource.org/licenses/MIT")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("alexey-lapin")
+                        name.set("Alexey Lapin")
+                        email.set("alexey-lapin@protonmail.com")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:git@github.com:alexey-lapin/spring-boot-admin-prometheus-service-discovery.git")
+                    developerConnection.set("scm:git:git@github.com:alexey-lapin/spring-boot-admin-prometheus-service-discovery.git")
+                    url.set("https://github.com/alexey-lapin/spring-boot-admin-prometheus-service-discovery")
+                }
             }
         }
     }

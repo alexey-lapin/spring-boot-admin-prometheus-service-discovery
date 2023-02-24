@@ -4,10 +4,20 @@ import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
     id("net.researchgate.release") version "3.0.2"
+    id("io.github.gradle-nexus.publish-plugin") version "1.2.0"
 }
 
 release {
     tagTemplate.set("v${'$'}version")
+}
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            username.set(System.getenv("OSSRH_USER") ?: return@sonatype)
+            password.set(System.getenv("OSSRH_PASSWORD") ?: return@sonatype)
+        }
+    }
 }
 
 val releaseUpdatableFiles = listOf<Pair<String, String>>(
