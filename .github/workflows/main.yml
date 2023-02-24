@@ -131,7 +131,7 @@ jobs:
         with:
           name: app-jar
           path: |
-            sbapsd-app/build/libs/*.jar
+            sbapsd-standalone/build/libs/*.jar
           retention-days: 5
 
   build-native-linux:
@@ -161,7 +161,7 @@ jobs:
         with:
           name: app-native-linux
           path: |
-            sbapsd-app/build/native/nativeCompile
+            sbapsd-standalone/build/native/nativeCompile
           retention-days: 5
 
   release:
