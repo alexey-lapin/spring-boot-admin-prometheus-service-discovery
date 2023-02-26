@@ -1,0 +1,8 @@
+[versions]
+spring-boot-v2 = "2.7.7"
+spring-boot-v3 = "3.0.2"
+spring-boot-admin-v2 = "2.7.10"
+
+[plugins]
+spring-boot-v2 = {id = "org.springframework.boot", version.ref = "spring-boot-v2"}
+spring-boot-v3 = {id = "org.springframework.boot", version.ref = "spring-boot-v3"}

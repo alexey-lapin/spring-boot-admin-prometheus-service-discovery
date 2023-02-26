@@ -1,17 +1,28 @@
+import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension
+
 plugins {
     id("java-library-conventions")
+    alias(libs.plugins.spring.boot.v2) apply false
+}
+
+apply(plugin = "io.spring.dependency-management")
+
+the<DependencyManagementExtension>().apply {
+    imports {
+        mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+    }
 }
 
 description = "Spring Boot Admin Prometheus Service Discovery Server"
 
 dependencies {
-    annotationProcessor("org.projectlombok:lombok:1.18.26")
-    compileOnly("org.projectlombok:lombok:1.18.26")
+    annotationProcessor("org.projectlombok:lombok")
+    compileOnly("org.projectlombok:lombok")
 
     compileOnly("de.codecentric:spring-boot-admin-server:2.7.10")
-    compileOnly("org.springframework.boot:spring-boot-starter-web:2.7.7")
+    compileOnly("org.springframework.boot:spring-boot-starter-web")
 
-    testRuntimeOnly("org.springframework.boot:spring-boot-starter-web:2.7.7")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
-    testImplementation("org.assertj:assertj-core:3.24.2")
+    testRuntimeOnly("org.springframework.boot:spring-boot-starter-web")
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.assertj:assertj-core")
 }

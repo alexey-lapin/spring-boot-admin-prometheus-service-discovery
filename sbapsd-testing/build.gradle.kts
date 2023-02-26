@@ -1,7 +1,17 @@
+import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
     id("java-base-conventions")
+    alias(libs.plugins.spring.boot.v2) apply false
+}
+
+apply(plugin = "io.spring.dependency-management")
+
+the<DependencyManagementExtension>().apply {
+    imports {
+        mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+    }
 }
 
 java {
@@ -12,8 +22,8 @@ java {
 dependencies {
     testImplementation(project(":sbapsd-server"))
 
-    testImplementation("org.springframework.boot:spring-boot-starter-webflux:2.7.7")
-    testImplementation("org.springframework.boot:spring-boot-starter-test:2.7.7")
+    testImplementation("org.springframework.boot:spring-boot-starter-webflux")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.assertj:assertj-core")
