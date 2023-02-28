@@ -15,8 +15,9 @@ rootProject.name = "spring-boot-admin-prometheus-service-discovery"
 
 include("sbapsd-server")
 include("sbapsd-testing")
+include("sbapsd-standalone-v2")
 if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_17)) {
-    include("sbapsd-standalone")
+    include("sbapsd-standalone-v3")
 }
 
 include("sbapsd-testing:sbapsd-testing-v1")

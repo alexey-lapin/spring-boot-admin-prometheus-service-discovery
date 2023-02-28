@@ -26,10 +26,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 }
 
-tasks.getByName<Test>("test") {
-    useJUnitPlatform()
-}
-
 val writeArtifactFile by tasks.registering {
     doLast {
         val outputDirectory = tasks.getByName<BuildNativeImageTask>("nativeCompile").outputDirectory
