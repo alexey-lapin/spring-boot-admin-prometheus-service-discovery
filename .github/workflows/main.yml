@@ -204,7 +204,7 @@ jobs:
         shell: cmd
         run: |
           start /min sbapsd-standalone\build\native\nativeCompile\sbapsd.exe --sbapsd.servers.s1.type=web-v2 --sbapsd.servers.s1.params.url=http://localhost:8082 ^> native.log
-          sleep 10
+          sleep 5
 
       - name: Upload artifacts 2
         uses: actions/upload-artifact@v3
@@ -218,6 +218,7 @@ jobs:
       - name: curl
         shell: cmd
         run: |
+          curl -vvv http://localhost:8082/instances
           curl -vvv http://localhost:8080/service-discovery/prometheus/s1
 
   release:
