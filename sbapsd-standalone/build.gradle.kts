@@ -2,9 +2,9 @@ import org.graalvm.buildtools.gradle.tasks.BuildNativeImageTask
 
 plugins {
     id("java")
-    id("org.springframework.boot") version "3.0.2"
-    id("io.spring.dependency-management") version "1.1.0"
-    id("org.graalvm.buildtools.native") version "0.9.18"
+    alias(libs.plugins.spring.boot.v3)
+    alias(libs.plugins.spring.deps)
+    alias(libs.plugins.graalvm)
 }
 
 java {

@@ -19,7 +19,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
     compileOnly("org.projectlombok:lombok")
 
-    compileOnly("de.codecentric:spring-boot-admin-server:2.7.10")
+    compileOnly("de.codecentric:spring-boot-admin-server:${libs.versions.sba.v2.get()}")
     compileOnly("org.springframework.boot:spring-boot-starter-web")
 
     testRuntimeOnly("org.springframework.boot:spring-boot-starter-web")
