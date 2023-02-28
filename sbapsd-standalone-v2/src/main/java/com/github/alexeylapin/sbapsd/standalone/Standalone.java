@@ -1,4 +1,4 @@
-package com.github.alexeylapin.sbapsd.app;
+package com.github.alexeylapin.sbapsd.standalone;
 
 import com.github.alexeylapin.sbapsd.config.EnableAdminServerServiceDiscovery;
 import org.springframework.boot.SpringApplication;
