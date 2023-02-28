@@ -2,7 +2,7 @@ import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
-    id("java-base-conventions")
+    id("sbapsd.java-base-conventions")
     alias(libs.plugins.spring.boot.v2) apply false
 }
 

@@ -1,5 +1,5 @@
 plugins {
-    id("java-base-conventions")
+    id("sbapsd.java-base-conventions")
 }
 
 java {

@@ -1,7 +1,7 @@
 import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension
 
 plugins {
-    id("java-library-conventions")
+    id("sbapsd.java-library-conventions")
     alias(libs.plugins.spring.boot.v2) apply false
 }
 
