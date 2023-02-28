@@ -12,7 +12,6 @@ on:
 
 jobs:
   test-v1:
-    if: false
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -45,7 +44,6 @@ jobs:
         run: ./gradlew :sbapsd-testing:test -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8081
 
   test-v2:
-    if: false
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -78,7 +76,6 @@ jobs:
         run: ./gradlew :sbapsd-testing:test -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8082
 
   test-v3:
-    if: false
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -137,7 +134,7 @@ jobs:
           retention-days: 5
 
   build-native-linux:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout project sources
         uses: actions/checkout@v3
@@ -193,31 +190,6 @@ jobs:
           path: |
             sbapsd-standalone/build/native/nativeCompile
           retention-days: 5
-
-      - name: Gradle run server
-        run: |
-          cmd /c "start /b gradlew runV2SBAServer -Psba.version=2.7.10 -Psba.server.port=8082 > gradle.log"
-          sleep 120
-
-      - name: Gradle run app
-        run: |
-          cmd /c "start /b sbapsd-standalone\build\native\nativeCompile\sbapsd.exe --sbapsd.servers.s1.type=web-v2 --sbapsd.servers.s1.params.url=http://localhost:8082 > native.log"
-          sleep 5
-
-      - name: Upload artifacts 2
-        uses: actions/upload-artifact@v3
-        with:
-          name: app-native-windows-logs
-          path: |
-            gradle.log
-            native.log
-          retention-days: 1
-
-      - name: curl
-        shell: cmd
-        run: |
-          curl -vvv http://localhost:8082/instances
-          curl -vvv http://localhost:8080/service-discovery/prometheus/s1
 
   release:
     runs-on: ubuntu-latest
