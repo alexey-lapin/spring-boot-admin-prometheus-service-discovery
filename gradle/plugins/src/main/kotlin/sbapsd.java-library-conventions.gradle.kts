@@ -2,7 +2,7 @@ plugins {
     `java-library`
     `maven-publish`
     `signing`
-    id("java-base-conventions")
+    id("sbapsd.java-base-conventions")
 }
 
 java {

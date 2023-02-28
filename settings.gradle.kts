@@ -4,6 +4,13 @@ dependencyResolutionManagement {
     }
 }
 
+pluginManagement {
+    repositories {
+        includeBuild("gradle/plugins")
+        gradlePluginPortal()
+    }
+}
+
 rootProject.name = "spring-boot-admin-prometheus-service-discovery"
 
 include("sbapsd-server")
