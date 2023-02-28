@@ -134,7 +134,7 @@ jobs:
           retention-days: 5
 
   build-native-linux:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout project sources
         uses: actions/checkout@v3
