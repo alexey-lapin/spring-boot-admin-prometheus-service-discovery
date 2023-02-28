@@ -3,8 +3,8 @@ import net.researchgate.release.tasks.PreTagCommit
 import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
-    id("net.researchgate.release") version "3.0.2"
-    id("io.github.gradle-nexus.publish-plugin") version "1.2.0"
+    alias(libs.plugins.release)
+    alias(libs.plugins.nexus)
 }
 
 release {
