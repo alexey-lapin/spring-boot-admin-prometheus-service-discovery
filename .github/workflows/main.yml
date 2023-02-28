@@ -203,7 +203,8 @@ jobs:
       - name: Gradle run app
         shell: cmd
         run: |
-          sbapsd-standalone\build\native\nativeCompile\sbapsd.exe --sbapsd.servers.s1.type=web-v2 --sbapsd.servers.s1.params.url=http://localhost:8082
+          start /min sbapsd-standalone\build\native\nativeCompile\sbapsd.exe --sbapsd.servers.s1.type=web-v2 --sbapsd.servers.s1.params.url=http://localhost:8082 ^> native.log
+          sleep 10
 
       - name: Upload artifacts 2
         uses: actions/upload-artifact@v3
