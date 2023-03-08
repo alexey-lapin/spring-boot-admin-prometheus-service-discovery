@@ -22,13 +22,13 @@ public class WebInstanceProvider implements InstanceProvider {
                 .map(this::convert);
     }
 
-    private Instance convert(WebInstancePayload application) {
+    private Instance convert(WebInstancePayload payload) {
         return Instance.builder()
-                .name(application.getName())
-                .url(application.getServiceUrl())
-                .status(application.getStatusInfo().getStatus())
-                .metadata(application.getMetadata())
-                .tags(application.getTags())
+                .name(payload.getName())
+                .url(payload.getServiceUrl())
+                .status(payload.getStatusInfo().getStatus())
+                .metadata(payload.getMetadata())
+                .tags(payload.getTags())
                 .build();
     }
 
