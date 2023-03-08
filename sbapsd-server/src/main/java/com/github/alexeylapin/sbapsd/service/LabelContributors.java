@@ -27,6 +27,8 @@ public interface LabelContributors {
 
     class AppNameLabelContributor implements LabelContributor, Ordered {
 
+        public static final String LABEL_APP_NAME = "__meta_discovery_app_name";
+
         @Override
         public int getOrder() {
             return 0;
@@ -35,13 +37,15 @@ public interface LabelContributors {
         @Override
         public void contribute(Map<String, String> labels, String name, List<Instance> instances) {
             if (name != null) {
-                labels.put("__meta_discovery_app_name", name);
+                labels.put(LABEL_APP_NAME, name);
             }
         }
 
     }
 
     class ActutorPathLabelContributor implements LabelContributor, Ordered {
+
+        public static final String LABEL_ACTUATOR_PATH = "__meta_discovery_actuator_path";
 
         @Override
         public int getOrder() {

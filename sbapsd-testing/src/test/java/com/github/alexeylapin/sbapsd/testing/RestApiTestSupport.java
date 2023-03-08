@@ -1,6 +1,7 @@
 package com.github.alexeylapin.sbapsd.testing;
 
 import com.github.alexeylapin.sbapsd.model.Service;
+import com.github.alexeylapin.sbapsd.service.LabelContributors;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -19,7 +20,8 @@ public abstract class RestApiTestSupport {
                 .expectBodyList(Service.class)
                 .hasSize(3)
                 .value(list -> assertAll(
-                        () -> assertThat(list).extracting(item -> item.getLabels().get("__app_name"))
+                        () -> assertThat(list).extracting(item -> item.getLabels()
+                                        .get(LabelContributors.AppNameLabelContributor.LABEL_APP_NAME))
                                 .containsExactlyInAnyOrder("app-1", "app-2", "app-3"),
                         () -> assertThat(list).extracting(item -> item.getLabels().get("__test"))
                                 .containsOnly("no-filters")
@@ -36,7 +38,8 @@ public abstract class RestApiTestSupport {
                 .expectBodyList(Service.class)
                 .hasSize(2)
                 .value(list -> assertAll(
-                        () -> assertThat(list).extracting(item -> item.getLabels().get("__app_name"))
+                        () -> assertThat(list).extracting(item -> item.getLabels()
+                                        .get(LabelContributors.AppNameLabelContributor.LABEL_APP_NAME))
                                 .containsExactlyInAnyOrder("app-1", "app-3"),
                         () -> assertThat(list).extracting(item -> item.getLabels().get("__test"))
                                 .containsOnly("filter-status")
@@ -53,7 +56,8 @@ public abstract class RestApiTestSupport {
                 .expectBodyList(Service.class)
                 .hasSize(1)
                 .value(list -> assertAll(
-                        () -> assertThat(list).extracting(item -> item.getLabels().get("__app_name"))
+                        () -> assertThat(list).extracting(item -> item.getLabels()
+                                        .get(LabelContributors.AppNameLabelContributor.LABEL_APP_NAME))
                                 .containsExactlyInAnyOrder("app-1"),
                         () -> assertThat(list).extracting(item -> item.getLabels().get("__test"))
                                 .containsOnly("filter-app-name"),
@@ -71,7 +75,8 @@ public abstract class RestApiTestSupport {
                 .expectBodyList(Service.class)
                 .hasSize(1)
                 .value(list -> assertAll(
-                        () -> assertThat(list).extracting(item -> item.getLabels().get("__app_name"))
+                        () -> assertThat(list).extracting(item -> item.getLabels()
+                                        .get(LabelContributors.AppNameLabelContributor.LABEL_APP_NAME))
                                 .containsExactlyInAnyOrder("app-1"),
                         () -> assertThat(list).extracting(item -> item.getLabels().get("__test"))
                                 .containsOnly("filter-app-name-status"),
