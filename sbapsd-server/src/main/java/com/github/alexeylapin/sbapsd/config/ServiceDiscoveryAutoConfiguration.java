@@ -8,9 +8,8 @@ import com.github.alexeylapin.sbapsd.service.factory.DefaultServiceProviderFacto
 import com.github.alexeylapin.sbapsd.service.factory.FilterFactory;
 import com.github.alexeylapin.sbapsd.service.factory.InstanceProviderFactory;
 import com.github.alexeylapin.sbapsd.service.factory.ServiceProviderFactory;
-import com.github.alexeylapin.sbapsd.service.factory.V1WebInstanceProviderFactory;
-import com.github.alexeylapin.sbapsd.service.factory.V2InstanceRegistryInstanceProviderFactory;
-import com.github.alexeylapin.sbapsd.service.factory.V2WebInstanceProviderFactory;
+import com.github.alexeylapin.sbapsd.service.factory.InstanceRegistryInstanceProviderFactory;
+import com.github.alexeylapin.sbapsd.service.factory.WebInstanceProviderFactory;
 import com.github.alexeylapin.sbapsd.web.ReactiveHandlerMapping;
 import com.github.alexeylapin.sbapsd.web.ServiceDiscoveryController;
 import com.github.alexeylapin.sbapsd.web.ServletHandlerMapping;
@@ -26,6 +25,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.reactive.accept.RequestedContentTypeResolver;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.Collections;
 import java.util.List;
@@ -39,28 +39,22 @@ public class ServiceDiscoveryAutoConfiguration {
 
     @ConditionalOnClass(InstanceRegistry.class)
     @Configuration(proxyBeanMethods = false)
-    public static class V2InstanceRegistryConfiguration {
+    public static class InstanceRegistryConfiguration {
 
         @ConditionalOnBean(InstanceRegistry.class)
         @ConditionalOnMissingBean
         @Bean
-        public V2InstanceRegistryInstanceProviderFactory v2InstanceRegistryInstanceProviderFactory(
+        public InstanceRegistryInstanceProviderFactory instanceRegistryInstanceProviderFactory(
                 InstanceRegistry instanceRegistry) {
-            return new V2InstanceRegistryInstanceProviderFactory(instanceRegistry);
+            return new InstanceRegistryInstanceProviderFactory(instanceRegistry);
         }
 
     }
 
     @ConditionalOnMissingBean
     @Bean
-    public V1WebInstanceProviderFactory v1WebInstanceProviderFactory() {
-        return new V1WebInstanceProviderFactory();
-    }
-
-    @ConditionalOnMissingBean
-    @Bean
-    public V2WebInstanceProviderFactory v2WebInstanceProviderFactory() {
-        return new V2WebInstanceProviderFactory();
+    public WebInstanceProviderFactory webInstanceProviderFactory(WebClient.Builder webClientBuilder) {
+        return new WebInstanceProviderFactory(webClientBuilder);
     }
 
     @ConditionalOnMissingBean

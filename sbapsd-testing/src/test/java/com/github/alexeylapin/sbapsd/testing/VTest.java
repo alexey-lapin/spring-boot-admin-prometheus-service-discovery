@@ -27,9 +27,9 @@
 //            return context;
 //        })
 //                .withUserConfiguration(A.class)
-////                .withPropertyValues("sbapsd.servers.s1.type=registry-v2")
+////                .withPropertyValues("sbapsd.servers.s1.type=registry")
 //                .withPropertyValues("server.port=-1")
-//                .withPropertyValues("sbapsd.servers.s2.type=web-v2")
+//                .withPropertyValues("sbapsd.servers.s2.type=web")
 //                .withPropertyValues("sbapsd.servers.s2.params.url=http://localhost:8080")
 ////                .with
 //                .run(context -> {

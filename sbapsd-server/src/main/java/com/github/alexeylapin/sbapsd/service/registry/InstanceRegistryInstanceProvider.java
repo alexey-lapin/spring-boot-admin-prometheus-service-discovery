@@ -1,15 +1,15 @@
-package com.github.alexeylapin.sbapsd.service.v2;
+package com.github.alexeylapin.sbapsd.service.registry;
 
 import com.github.alexeylapin.sbapsd.model.Instance;
 import com.github.alexeylapin.sbapsd.service.InstanceProvider;
 import de.codecentric.boot.admin.server.services.InstanceRegistry;
 import reactor.core.publisher.Flux;
 
-public class V2InstanceRegistryInstanceProvider implements InstanceProvider {
+public class InstanceRegistryInstanceProvider implements InstanceProvider {
 
     private final InstanceRegistry instanceRegistry;
 
-    public V2InstanceRegistryInstanceProvider(InstanceRegistry instanceRegistry) {
+    public InstanceRegistryInstanceProvider(InstanceRegistry instanceRegistry) {
         this.instanceRegistry = instanceRegistry;
     }
 
