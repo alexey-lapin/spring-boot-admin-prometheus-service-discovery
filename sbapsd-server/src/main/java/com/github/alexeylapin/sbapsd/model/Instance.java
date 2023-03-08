@@ -11,7 +11,8 @@ public class Instance {
 
     private String name;
     private String status;
-    private String url;
+    private String serviceUrl;
+    private String managementUrl;
     private Map<String, String> tags;
     private Map<String, String> metadata;
 

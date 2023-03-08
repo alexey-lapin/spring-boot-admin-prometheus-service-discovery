@@ -1,5 +1,7 @@
 package com.github.alexeylapin.sbapsd.config;
 
+import com.github.alexeylapin.sbapsd.service.LabelContributor;
+import com.github.alexeylapin.sbapsd.service.LabelContributors;
 import com.github.alexeylapin.sbapsd.service.ServiceProvider;
 import com.github.alexeylapin.sbapsd.service.ServiceProviderRegistry;
 import com.github.alexeylapin.sbapsd.service.factory.CompositeInstanceProviderFactory;
@@ -14,6 +16,7 @@ import com.github.alexeylapin.sbapsd.web.ReactiveHandlerMapping;
 import com.github.alexeylapin.sbapsd.web.ServiceDiscoveryController;
 import com.github.alexeylapin.sbapsd.web.ServletHandlerMapping;
 import de.codecentric.boot.admin.server.services.InstanceRegistry;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -30,12 +33,39 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @ConditionalOnBean(ServiceDiscoveryMarkerConfiguration.Marker.class)
 @AutoConfigureAfter(name = "de.codecentric.boot.admin.server.config.AdminServerAutoConfiguration")
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(ServiceDiscoveryProperties.class)
 public class ServiceDiscoveryAutoConfiguration {
+
+    @Configuration(proxyBeanMethods = false)
+    public static class LabelContributorConfiguration {
+
+        @ConditionalOnMissingBean
+        @Bean
+        public LabelContributors.CompositeLabelContributor compositeLabelContributor(
+                ObjectProvider<LabelContributor> labelContributorObjectProvider) {
+            List<LabelContributor> labelContributors = labelContributorObjectProvider.orderedStream()
+                    .collect(Collectors.toList());
+            return new LabelContributors.CompositeLabelContributor(labelContributors);
+        }
+
+        @ConditionalOnMissingBean
+        @Bean
+        public LabelContributors.AppNameLabelContributor appNameLabelContributor() {
+            return new LabelContributors.AppNameLabelContributor();
+        }
+
+        @ConditionalOnMissingBean
+        @Bean
+        public LabelContributors.ActutorPathLabelContributor actutorPathLabelContributor() {
+            return new LabelContributors.ActutorPathLabelContributor();
+        }
+
+    }
 
     @ConditionalOnClass(InstanceRegistry.class)
     @Configuration(proxyBeanMethods = false)
@@ -72,8 +102,9 @@ public class ServiceDiscoveryAutoConfiguration {
     @ConditionalOnMissingBean
     @Bean
     public ServiceProviderFactory serviceProviderFactory(CompositeInstanceProviderFactory compositeInstanceProviderFactory,
-                                                         FilterFactory filterFactory) {
-        return new DefaultServiceProviderFactory(compositeInstanceProviderFactory, filterFactory);
+                                                         FilterFactory filterFactory,
+                                                         LabelContributors.CompositeLabelContributor labelContributor) {
+        return new DefaultServiceProviderFactory(compositeInstanceProviderFactory, filterFactory, labelContributor);
     }
 
     @ConditionalOnMissingBean
