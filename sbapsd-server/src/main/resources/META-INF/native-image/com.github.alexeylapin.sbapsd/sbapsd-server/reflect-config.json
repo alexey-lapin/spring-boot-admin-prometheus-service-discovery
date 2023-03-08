@@ -1,11 +1,21 @@
 [
   {
-    "name": "com.github.alexeylapin.sbapsd.service.v1.V1Application",
-    "allDeclaredFields": true,
+    "name": "com.github.alexeylapin.sbapsd.service.web.WebInstancePayload",
     "allDeclaredConstructors": true,
+    "allDeclaredFields": true,
     "methods": [
       {
-        "name": "getServiceUrl",
+        "name": "getStatusInfo",
+        "parameterTypes": []
+      },
+      {
+        "name": "setStatusInfo",
+        "parameterTypes": [
+          "com.github.alexeylapin.sbapsd.service.web.WebInstancePayload$StatusInfo"
+        ]
+      },
+      {
+        "name": "getName",
         "parameterTypes": []
       },
       {
@@ -15,14 +25,8 @@
         ]
       },
       {
-        "name": "getStatusInfo",
+        "name": "getServiceUrl",
         "parameterTypes": []
-      },
-      {
-        "name": "setMetadata",
-        "parameterTypes": [
-          "java.util.Map"
-        ]
       },
       {
         "name": "setServiceUrl",
@@ -35,53 +39,7 @@
         "parameterTypes": []
       },
       {
-        "name": "setStatusInfo",
-        "parameterTypes": [
-          "com.github.alexeylapin.sbapsd.service.v1.V1Application$StatusInfo"
-        ]
-      },
-      {
-        "name": "getName",
-        "parameterTypes": []
-      }
-    ]
-  },
-  {
-    "name": "com.github.alexeylapin.sbapsd.service.v1.V1Application$StatusInfo",
-    "allDeclaredFields": true,
-    "allDeclaredConstructors": true,
-    "methods": [
-      {
-        "name": "setStatus",
-        "parameterTypes": [
-          "java.lang.String"
-        ]
-      },
-      {
-        "name": "getStatus",
-        "parameterTypes": []
-      }
-    ]
-  },
-  {
-    "name": "com.github.alexeylapin.sbapsd.service.v2.V2Instance",
-    "allDeclaredConstructors": true,
-    "allDeclaredFields": true,
-    "methods": [
-      {
-        "name": "setRegistration",
-        "parameterTypes": [
-          "com.github.alexeylapin.sbapsd.service.v2.V2Instance$Registration"
-        ]
-      },
-      {
-        "name": "setStatusInfo",
-        "parameterTypes": [
-          "com.github.alexeylapin.sbapsd.service.v2.V2Instance$StatusInfo"
-        ]
-      },
-      {
-        "name": "setTags",
+        "name": "setMetadata",
         "parameterTypes": [
           "java.util.Map"
         ]
@@ -91,17 +49,25 @@
         "parameterTypes": []
       },
       {
+        "name": "setRegistration",
+        "parameterTypes": [
+          "com.github.alexeylapin.sbapsd.service.web.WebInstancePayload$Registration"
+        ]
+      },
+      {
         "name": "getTags",
         "parameterTypes": []
       },
       {
-        "name": "getStatusInfo",
-        "parameterTypes": []
+        "name": "setTags",
+        "parameterTypes": [
+          "java.util.Map"
+        ]
       }
     ]
   },
   {
-    "name": "com.github.alexeylapin.sbapsd.service.v2.V2Instance$Registration",
+    "name": "com.github.alexeylapin.sbapsd.service.web.WebInstancePayload$Registration",
     "allDeclaredConstructors": true,
     "allDeclaredFields": true,
     "methods": [
@@ -138,7 +104,7 @@
     ]
   },
   {
-    "name": "com.github.alexeylapin.sbapsd.service.v2.V2Instance$StatusInfo",
+    "name": "com.github.alexeylapin.sbapsd.service.web.WebInstancePayload$StatusInfo",
     "allDeclaredConstructors": true,
     "allDeclaredFields": true,
     "methods": [

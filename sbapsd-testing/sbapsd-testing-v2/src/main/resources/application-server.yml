@@ -4,11 +4,11 @@ server:
 sbapsd:
   servers:
     s1:
-      type: registry-v2
+      type: registry
       labels:
         __test: no-filters
     s2:
-      type: registry-v2
+      type: registry
       labels:
         __test: filter-status
       filters:
@@ -16,7 +16,7 @@ sbapsd:
           params:
             value: UP
     s3:
-      type: registry-v2
+      type: registry
       labels:
         __test: filter-app-name
       filters:
@@ -24,7 +24,7 @@ sbapsd:
           params:
             value: app-1
     s4:
-      type: registry-v2
+      type: registry
       labels:
         __test: filter-app-name-status
       filters:
