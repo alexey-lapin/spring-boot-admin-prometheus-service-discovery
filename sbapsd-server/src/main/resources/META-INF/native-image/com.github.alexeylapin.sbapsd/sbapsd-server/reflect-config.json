@@ -35,6 +35,16 @@
         ]
       },
       {
+        "name": "getManagementUrl",
+        "parameterTypes": []
+      },
+      {
+        "name": "setManagementUrl",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      },
+      {
         "name": "getMetadata",
         "parameterTypes": []
       },
@@ -97,6 +107,16 @@
       },
       {
         "name": "setServiceUrl",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      },
+      {
+        "name": "getManagementUrl",
+        "parameterTypes": []
+      },
+      {
+        "name": "setManagementUrl",
         "parameterTypes": [
           "java.lang.String"
         ]

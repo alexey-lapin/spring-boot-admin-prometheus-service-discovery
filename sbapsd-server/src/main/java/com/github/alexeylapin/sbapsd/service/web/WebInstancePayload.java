@@ -15,6 +15,7 @@ public class WebInstancePayload {
     // V1
     private String name;
     private String serviceUrl;
+    private String managementUrl;
     private Map<String, String> metadata;
 
     // V2
@@ -27,6 +28,10 @@ public class WebInstancePayload {
 
     public String getServiceUrl() {
         return registration == null ? serviceUrl : registration.getServiceUrl();
+    }
+
+    public String getManagementUrl() {
+        return registration == null ? managementUrl : registration.getManagementUrl();
     }
 
     public Map<String, String> getMetadata() {
@@ -47,6 +52,7 @@ public class WebInstancePayload {
 
         private String name;
         private String serviceUrl;
+        private String managementUrl;
         private Map<String, String> metadata;
 
     }

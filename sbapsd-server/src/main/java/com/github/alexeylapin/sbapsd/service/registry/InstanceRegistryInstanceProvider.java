@@ -21,7 +21,8 @@ public class InstanceRegistryInstanceProvider implements InstanceProvider {
     private Instance convert(de.codecentric.boot.admin.server.domain.entities.Instance instance) {
         return Instance.builder()
                 .name(instance.getRegistration().getName())
-                .url(instance.getRegistration().getServiceUrl())
+                .serviceUrl(instance.getRegistration().getServiceUrl())
+                .managementUrl(instance.getRegistration().getManagementUrl())
                 .status(instance.getStatusInfo().getStatus())
                 .tags(instance.getTags().getValues())
                 .metadata(instance.getRegistration().getMetadata())

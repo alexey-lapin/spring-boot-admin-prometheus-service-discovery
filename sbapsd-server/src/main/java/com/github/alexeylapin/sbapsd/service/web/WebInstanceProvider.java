@@ -25,7 +25,8 @@ public class WebInstanceProvider implements InstanceProvider {
     private Instance convert(WebInstancePayload payload) {
         return Instance.builder()
                 .name(payload.getName())
-                .url(payload.getServiceUrl())
+                .serviceUrl(payload.getServiceUrl())
+                .managementUrl(payload.getManagementUrl())
                 .status(payload.getStatusInfo().getStatus())
                 .metadata(payload.getMetadata())
                 .tags(payload.getTags())
