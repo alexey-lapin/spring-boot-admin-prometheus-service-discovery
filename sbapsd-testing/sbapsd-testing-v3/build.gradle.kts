@@ -13,6 +13,7 @@ dependencies {
     if (isSBAVersion3()) {
         implementation("de.codecentric:spring-boot-admin-starter-server:${getSBAVersion()}")
         implementation("de.codecentric:spring-boot-admin-starter-client:${getSBAVersion()}")
+        implementation("io.micrometer:micrometer-registry-prometheus:${libs.versions.micrometer.get()}")
     }
 }
 
