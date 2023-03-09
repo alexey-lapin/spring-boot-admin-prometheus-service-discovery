@@ -233,7 +233,7 @@ jobs:
           body: ${{ steps.build-release-changelog.outputs.changelog }}
           draft: true
           files: |
-            app-jar/!(*-plain).jar
+            app-jar/**/!(*-plain).jar
             app-native-linux/*.tar.gz
             app-native-windows/*.zip
 
