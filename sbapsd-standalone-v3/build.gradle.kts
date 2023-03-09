@@ -24,6 +24,7 @@ dependencies {
     implementation(project(":sbapsd-server"))
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("io.micrometer:micrometer-registry-prometheus")
 }
 
 val writeArtifactFile by tasks.registering {
