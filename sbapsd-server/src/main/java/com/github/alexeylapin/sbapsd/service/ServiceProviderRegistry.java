@@ -1,7 +1,9 @@
 package com.github.alexeylapin.sbapsd.service;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 import java.util.Map;
-import java.util.Optional;
 
 public class ServiceProviderRegistry {
 
@@ -11,8 +13,12 @@ public class ServiceProviderRegistry {
         this.map = map;
     }
 
-    public Optional<ServiceProvider> findServiceProvider(String name) {
-        return Optional.ofNullable(map.get(name));
+    public Flux<ServiceProvider> findAll() {
+        return Flux.fromIterable(map.values());
+    }
+
+    public Mono<ServiceProvider> findByName(String name) {
+        return Mono.justOrEmpty(map.get(name));
     }
 
 }

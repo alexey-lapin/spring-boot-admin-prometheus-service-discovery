@@ -10,6 +10,7 @@ import java.util.Map;
 @Data
 public class ServiceProviderDef {
 
+    private String name;
     private String type;
     private Map<String, String> params = new HashMap<>();
     private Map<String, String> labels = new HashMap<>();

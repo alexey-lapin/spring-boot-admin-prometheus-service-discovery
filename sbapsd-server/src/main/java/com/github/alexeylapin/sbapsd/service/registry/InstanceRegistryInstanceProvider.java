@@ -2,6 +2,7 @@ package com.github.alexeylapin.sbapsd.service.registry;
 
 import com.github.alexeylapin.sbapsd.model.Instance;
 import com.github.alexeylapin.sbapsd.service.InstanceProvider;
+import com.github.alexeylapin.sbapsd.service.Validate;
 import de.codecentric.boot.admin.server.services.InstanceRegistry;
 import reactor.core.publisher.Flux;
 
@@ -10,7 +11,7 @@ public class InstanceRegistryInstanceProvider implements InstanceProvider {
     private final InstanceRegistry instanceRegistry;
 
     public InstanceRegistryInstanceProvider(InstanceRegistry instanceRegistry) {
-        this.instanceRegistry = instanceRegistry;
+        this.instanceRegistry = Validate.notNull(instanceRegistry, "instanceRegistry must not be null");
     }
 
     @Override

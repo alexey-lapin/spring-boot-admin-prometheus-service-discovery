@@ -55,14 +55,26 @@ public class ServiceDiscoveryAutoConfiguration {
 
         @ConditionalOnMissingBean
         @Bean
-        public LabelContributors.AppNameLabelContributor appNameLabelContributor() {
-            return new LabelContributors.AppNameLabelContributor();
+        public LabelContributors.StaticLabelContributor staticLabelContributor() {
+            return new LabelContributors.StaticLabelContributor(0);
         }
 
         @ConditionalOnMissingBean
         @Bean
-        public LabelContributors.ActutorPathLabelContributor actutorPathLabelContributor() {
-            return new LabelContributors.ActutorPathLabelContributor();
+        public LabelContributors.AppNameLabelContributor appNameLabelContributor() {
+            return new LabelContributors.AppNameLabelContributor(10);
+        }
+
+        @ConditionalOnMissingBean
+        @Bean
+        public LabelContributors.ActuatorPathLabelContributor actuatorPathLabelContributor() {
+            return new LabelContributors.ActuatorPathLabelContributor(20);
+        }
+
+        @ConditionalOnMissingBean
+        @Bean
+        public LabelContributors.ServerNameLabelContributor serverNameLabelContributor() {
+            return new LabelContributors.ServerNameLabelContributor(30);
         }
 
     }

@@ -6,7 +6,9 @@ import com.github.alexeylapin.sbapsd.service.DefaultServiceProvider;
 import com.github.alexeylapin.sbapsd.service.InstanceProvider;
 import com.github.alexeylapin.sbapsd.service.LabelContributor;
 import com.github.alexeylapin.sbapsd.service.ServiceProvider;
+import com.github.alexeylapin.sbapsd.service.Validate;
 
+import java.util.Collections;
 import java.util.function.Predicate;
 
 public class DefaultServiceProviderFactory implements ServiceProviderFactory {
@@ -25,9 +27,14 @@ public class DefaultServiceProviderFactory implements ServiceProviderFactory {
 
     @Override
     public ServiceProvider create(ServiceProviderDef serviceProviderDef) {
+        Validate.notNull(serviceProviderDef, "serviceProviderDef must not be null");
         InstanceProvider instanceProvider = instanceProviderFactory.create(serviceProviderDef);
-        Predicate<Instance> predicate = filterFactory.createAll(serviceProviderDef.getFilters());
-        return new DefaultServiceProvider(instanceProvider, predicate, serviceProviderDef.getLabels(), labelContributor);
+        Predicate<Instance> instancePredicate = filterFactory.createAll(serviceProviderDef.getFilters());
+        return new DefaultServiceProvider(serviceProviderDef.getName(),
+                instanceProvider,
+                instancePredicate,
+                Collections.unmodifiableMap(serviceProviderDef.getLabels()),
+                labelContributor);
     }
 
 }
