@@ -2,6 +2,7 @@ package com.github.alexeylapin.sbapsd.service.web;
 
 import com.github.alexeylapin.sbapsd.model.Instance;
 import com.github.alexeylapin.sbapsd.service.InstanceProvider;
+import com.github.alexeylapin.sbapsd.service.Validate;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -11,7 +12,7 @@ public class WebInstanceProvider implements InstanceProvider {
     private final WebClient client;
 
     public WebInstanceProvider(WebClient client) {
-        this.client = client;
+        this.client = Validate.notNull(client, "client must not be null");
     }
 
     @Override

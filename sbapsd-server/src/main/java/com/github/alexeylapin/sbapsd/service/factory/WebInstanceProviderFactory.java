@@ -2,6 +2,7 @@ package com.github.alexeylapin.sbapsd.service.factory;
 
 import com.github.alexeylapin.sbapsd.config.def.ServiceProviderDef;
 import com.github.alexeylapin.sbapsd.service.InstanceProvider;
+import com.github.alexeylapin.sbapsd.service.Validate;
 import com.github.alexeylapin.sbapsd.service.web.WebInstanceProvider;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
@@ -16,6 +17,8 @@ import java.util.Map;
 
 public class WebInstanceProviderFactory implements InstanceProviderFactory {
 
+    public static final String TYPE_WEB = "web";
+
     private static final String PARAM_URL = "url";
     private static final String PARAM_USERNAME = "username";
     private static final String PARAM_PASSWORD = "password";
@@ -24,16 +27,18 @@ public class WebInstanceProviderFactory implements InstanceProviderFactory {
     private final WebClient.Builder webClientBuilder;
 
     public WebInstanceProviderFactory(WebClient.Builder webClientBuilder) {
+        Validate.notNull(webClientBuilder, "webClientBuilder must not be null");
         this.webClientBuilder = webClientBuilder;
     }
 
     @Override
     public String getType() {
-        return "web";
+        return TYPE_WEB;
     }
 
     @Override
     public InstanceProvider create(ServiceProviderDef serviceProviderDef) {
+        Validate.notNull(serviceProviderDef, "serviceProviderDef must not be null");
         Map<String, String> params = serviceProviderDef.getParams();
         configureUrl(webClientBuilder, params);
         configureAuth(webClientBuilder, params);
@@ -43,6 +48,7 @@ public class WebInstanceProviderFactory implements InstanceProviderFactory {
 
     private static void configureUrl(WebClient.Builder webClientBuilder, Map<String, String> params) {
         String url = params.get(PARAM_URL);
+        Validate.notNull(url, "server.params.url must not be null");
         webClientBuilder.baseUrl(url);
     }
 
