@@ -212,6 +212,7 @@ jobs:
       - name: Prepare Linux Artifacts
         run: |
           cd app-native-linux
+          chmod +x sbapsd
           tar -czf $(cat gradle-artifact.txt)-linux-amd64.tar.gz sbapsd
 
       - name: Prepare Windows Artifacts
