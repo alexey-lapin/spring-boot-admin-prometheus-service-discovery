@@ -4,6 +4,9 @@ spring-boot-v3 = "3.0.3"
 sba-v2 = "2.7.10"
 micrometer = "1.9.8"
 
+[libraries]
+spring-boot-v2-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot-v2" }
+
 [plugins]
 spring-boot-v2 = {id = "org.springframework.boot", version.ref = "spring-boot-v2"}
 spring-boot-v3 = {id = "org.springframework.boot", version.ref = "spring-boot-v3"}
