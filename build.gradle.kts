@@ -21,7 +21,7 @@ nexusPublishing {
 }
 
 val releaseUpdatableFiles = listOf<Pair<String, String>>(
-//    Pair("src/README.md", ".")
+    Pair("src/README.md", ".")
 )
 
 val updateReleaseDependentFiles by tasks.registering(Copy::class) {
@@ -32,6 +32,7 @@ val updateReleaseDependentFiles by tasks.registering(Copy::class) {
         }
     }
     into(projectDir)
+    doNotTrackState("workaround")
 }
 
 tasks.getByName("afterReleaseBuild") {
