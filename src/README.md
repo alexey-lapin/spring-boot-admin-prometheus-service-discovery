@@ -10,7 +10,7 @@ for [Prometheus](https://prometheus.io/) [http service discovery](https://promet
 
 The service discovery functionality can be enabled by applying `@EnableAdminServerServiceDiscovery` annotation.
 One option is to use the library together with Spring Boot Admin server in the same app. This way the
-SBA's `instance registry` based provider is available. Another option is to utilize this library separately,
+SBA's instance registry based provider is available. Another option is to utilize this library separately,
 then only REST based provider is configured.
 
 ```java
@@ -55,11 +55,11 @@ implementation("com.github.alexey-lapin.sbapsd:sbapsd-server:@version@")
 </dependency>
 ```
 
-It is also necessary to have spring web stack on classpath e.g. org.springframework.boot:spring-boot-starter-webflux or
-org.springframework.boot:spring-boot-starter-web
+It is also necessary to have spring web stack on classpath e.g. org.springframework.boot:**spring-boot-starter-webflux** or
+org.springframework.boot:**spring-boot-starter-web**
 
 2. Put the `@EnableAdminServerServiceDiscovery` annotation
-3. Add config props - see Configuration section
+3. Add config props - see Configuration section below
 4. Customize autoconfigured beans if necessary (see `ServiceDiscoveryAutoConfiguration` class)
 
 ### As a standalone app
@@ -82,7 +82,7 @@ or
 java -jar sbapsd-standalone-v3-@version@.jar
 ```
 
-Standalone app is also available as experimental native binaries for linux and windows.
+Standalone app is also available as experimental GraalVM native binaries for linux and windows.
 
 ### Configuration
 
@@ -147,6 +147,8 @@ Configures web connectivity
 
 #### filter
 
+Configures what instances should be exposed 
+
 | key    | type                    |
 |--------|-------------------------|
 | type*  | string: app-name/status |
@@ -154,11 +156,15 @@ Configures web connectivity
 
 #### filter.params (app-name)
 
+Filters instances by spring.application.name
+
 | key    | type           |
 |--------|----------------|
 | value* | string (regex) |
 
 #### filter.params (status)
+
+filters instances by status (UP, DOWN, OFFLINE, UNKNOWN, OUT_OF_SERVICE) 
 
 | key    | type                     |
 |--------|--------------------------|
