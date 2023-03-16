@@ -1,4 +1,5 @@
 # SBAPSD
+
 ## Spring Boot Admin Prometheus Service Discovery
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.alexey-lapin.sbapsd/sbapsd-server/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.alexey-lapin.sbapsd/sbapsd-server/)
@@ -9,10 +10,11 @@ for [Prometheus](https://prometheus.io/) [http service discovery](https://promet
 
 The service discovery functionality can be enabled by applying `@EnableAdminServerServiceDiscovery` annotation.
 One option is to use the library together with Spring Boot Admin server in the same app. This way the
-SBA's `instance registry`based provider is available. Another option is to utilize this library separately, 
+SBA's `instance registry` based provider is available. Another option is to utilize this library separately,
 then only REST based provider is configured.
 
 ```java
+
 @SpringBootApplication
 @EnableAdminServer
 @EnableAdminServerServiceDiscovery
@@ -32,26 +34,36 @@ The library is tested with Spring Boot Admin v1, v2, v3.
 | registry |     | ✔   | ✔   |
 | web      | ✔   | ✔   | ✔   |
 
-
 ## Usage
+
 ### As a library
 
-1. Add dependency
+The library is based on Spring Boot and reactive stack (Reactor).
+
+1. Add the `sbapsd-server` dependency
+
 ```kotlin
 implementation("com.github.alexey-lapin.sbapsd:sbapsd-server:@version@")
 ```
+
 ```xml
+
 <dependency>
     <groupId>com.github.alexey-lapin.sbapsd</groupId>
     <artifactId>sbapsd-server</artifactId>
     <version>@version@</version>
 </dependency>
 ```
+
+It is also necessary to have spring web stack on classpath e.g. org.springframework.boot:spring-boot-starter-webflux or
+org.springframework.boot:spring-boot-starter-web
+
 2. Put the `@EnableAdminServerServiceDiscovery` annotation
 3. Add config props - see Configuration section
-4. Customize autoconfigured beans if necessary (see `ServiceDiscoveryAutoConfiguration` class) 
+4. Customize autoconfigured beans if necessary (see `ServiceDiscoveryAutoConfiguration` class)
 
 ### As a standalone app
+
 Grab a jar from
 the [releases page](https://github.com/alexey-lapin/spring-boot-admin-prometheus-service-discovery/releases/latest):
 
@@ -59,30 +71,36 @@ the [releases page](https://github.com/alexey-lapin/spring-boot-admin-prometheus
 - v3 is based on Spring Boot 3 and requires Java 17
 
 and run it like so:
+
 ```shell
 java -jar sbapsd-standalone-v2-@version@.jar
 ```
+
 or
+
 ```shell
 java -jar sbapsd-standalone-v3-@version@.jar
 ```
-Standalone app is also available as experimental native binaries.
+
+Standalone app is also available as experimental native binaries for linux and windows.
 
 ### Configuration
-Example:
+
+Yaml example:
+
 ```yml
 sbapsd:
   servers:
     server-1:
       type: web
       params:
-        url: http://localhost:8091
+        url: http://localhost:8091/api/applications # SBA v1
       labels:
         static-label-1: val-1
     server-2:
       type: web
       params:
-        url: http://localhost:8092
+        url: http://localhost:8092/instances # SBA v2/v3
       filters:
         - type: app-name
           params:
@@ -98,24 +116,27 @@ sbapsd:
 ```
 
 #### sbapsd
+
 Root config
 
-| key     | type   |
-|---------|--------|
-| servers | server |
+| key      | type |
+|----------|------|
+| servers* | map  |
 
 #### server
-Configures the way of how to obtain instances either directly from instance **registry** or via **web** 
 
-| key     | type            |
-|---------|-----------------|
-| type*   | web or registry |
-| params  | map             |
-| labels  | map             |
-| filters | list            |
+Configures the way of how to obtain instances either directly from instance **registry** or via **web**
 
-#### web type params
-Configures rest connectivity
+| key     | type                 |
+|---------|----------------------|
+| type*   | string: web/registry |
+| params  | map                  |
+| labels  | map                  |
+| filters | list                 |
+
+#### server.params (web)
+
+Configures web connectivity
 
 | key      | type   |
 |----------|--------|
@@ -124,9 +145,41 @@ Configures rest connectivity
 | password | string |
 | insecure | bool   |
 
+#### filter
 
+| key    | type                    |
+|--------|-------------------------|
+| type*  | string: app-name/status |
+| params | map                     |
+
+#### filter.params (app-name)
+
+| key    | type           |
+|--------|----------------|
+| value* | string (regex) |
+
+#### filter.params (status)
+
+| key    | type                     |
+|--------|--------------------------|
+| value* | string (comma-separated) |
 
 ### Prometheus
+
+In prometheus config it is possible to use specific server name or omit it to get merged list of instances
+from all the configured servers:
+
+- /service-discovery/prometheus/server-1
+- /service-discovery/prometheus
+
+The service discovery component contributes a set of labels that can be used during the relabel phase:
+
+- __meta_discovery_app_name
+- __meta_discovery_actuator_path
+- __meta_discovery_server_name
+
+The example config sets \_\_metrics_path\_\_ and app labels:
+
 ```yml
 scrape_configs:
   - job_name: "spring"
