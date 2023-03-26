@@ -73,8 +73,8 @@ public class ServiceDiscoveryAutoConfiguration {
 
         @ConditionalOnMissingBean
         @Bean
-        public LabelContributors.ServerNameLabelContributor serverNameLabelContributor() {
-            return new LabelContributors.ServerNameLabelContributor(30);
+        public LabelContributors.ProviderNameLabelContributor serverNameLabelContributor() {
+            return new LabelContributors.ProviderNameLabelContributor(30);
         }
 
     }
@@ -123,7 +123,7 @@ public class ServiceDiscoveryAutoConfiguration {
     @Bean
     public ServiceProviderRegistry serviceProviderRegistry(ServiceDiscoveryProperties properties,
                                                            ServiceProviderFactory serviceProviderFactory) {
-        Map<String, ServiceProvider> map = serviceProviderFactory.createAll(properties.getServers());
+        Map<String, ServiceProvider> map = serviceProviderFactory.createAll(properties.getProviders());
         return new ServiceProviderRegistry(Collections.unmodifiableMap(map));
     }
 

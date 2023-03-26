@@ -7,6 +7,9 @@ import com.github.alexeylapin.sbapsd.service.Validate;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Instantiates {@link ServiceProvider} based on {@link ServiceProviderDef}
+ */
 public interface ServiceProviderFactory {
 
     ServiceProvider create(ServiceProviderDef serviceProviderDef);

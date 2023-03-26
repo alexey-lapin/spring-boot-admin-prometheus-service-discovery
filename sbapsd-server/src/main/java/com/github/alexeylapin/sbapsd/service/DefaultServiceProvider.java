@@ -13,6 +13,9 @@ import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+/**
+ * Provides {@link Service}s using configured {@link InstanceProvider}
+ */
 public class DefaultServiceProvider implements ServiceProvider {
 
     private final String name;
@@ -53,8 +56,17 @@ public class DefaultServiceProvider implements ServiceProvider {
                         .map(URI::create)
                         .map(uri -> uri.getHost() + ":" + uri.getPort())
                         .collect(Collectors.toList());
+
                 Map<String, String> labels = new HashMap<>();
-                labelContributor.contribute(labels, new LabelContribution(name, staticLabels, appName, instancesWithTheSamePath));
+                LabelContribution labelContribution = LabelContribution.builder()
+                        .serviceProviderName(name)
+                        .staticLabels(staticLabels)
+                        .appName(appName)
+                        .instances(instancesWithTheSamePath)
+                        .build();
+
+                labelContributor.contribute(labels, labelContribution);
+
                 Service service = new Service(targets, labels);
                 services.add(service);
             }

@@ -7,6 +7,9 @@ import com.github.alexeylapin.sbapsd.service.Validate;
 import java.util.List;
 import java.util.function.Predicate;
 
+/**
+ * Instantiates {@link Predicate} based on {@link FilterDef}
+ */
 public interface FilterFactory {
 
     Predicate<Instance> EMPTY_FILTER = instance -> true;

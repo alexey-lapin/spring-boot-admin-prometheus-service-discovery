@@ -2,7 +2,7 @@ server:
   port: ${sba.server.port}
 
 sbapsd:
-  servers:
+  providers:
     s1:
       type: registry
       labels:

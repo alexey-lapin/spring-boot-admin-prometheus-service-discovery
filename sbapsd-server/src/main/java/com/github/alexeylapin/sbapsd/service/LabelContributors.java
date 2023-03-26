@@ -9,8 +9,14 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A collection of default {@link LabelContributor}s
+ */
 public interface LabelContributors {
 
+    /**
+     * Delegates label contribution to the child {@link LabelContributor}s
+     */
     class CompositeLabelContributor implements LabelContributor {
 
         private final List<LabelContributor> delegates;
@@ -26,6 +32,9 @@ public interface LabelContributors {
 
     }
 
+    /**
+     * Basic order aware LabelContributor
+     */
     @RequiredArgsConstructor
     @Getter
     abstract class AbstractLabelContributor implements LabelContributor {
@@ -34,6 +43,9 @@ public interface LabelContributors {
 
     }
 
+    /**
+     * Contributes static labels associated with provider
+     */
     class StaticLabelContributor extends AbstractLabelContributor implements Ordered {
 
         public StaticLabelContributor(int order) {
@@ -48,6 +60,9 @@ public interface LabelContributors {
 
     }
 
+    /**
+     * Contributes application name label
+     */
     class AppNameLabelContributor extends AbstractLabelContributor implements Ordered {
 
         public static final String LABEL_APP_NAME = "__meta_discovery_app_name";
@@ -66,6 +81,9 @@ public interface LabelContributors {
 
     }
 
+    /**
+     * Contributes actuator path label
+     */
     class ActuatorPathLabelContributor extends AbstractLabelContributor implements Ordered {
 
         public static final String LABEL_ACTUATOR_PATH = "__meta_discovery_actuator_path";
@@ -89,18 +107,21 @@ public interface LabelContributors {
 
     }
 
-    class ServerNameLabelContributor extends AbstractLabelContributor implements Ordered {
+    /**
+     * Contributes provider name (from config) label
+     */
+    class ProviderNameLabelContributor extends AbstractLabelContributor implements Ordered {
 
-        public static final String LABEL_SERVER_NAME = "__meta_discovery_server_name";
+        public static final String LABEL_PROVIDER_NAME = "__meta_discovery_provider_name";
 
-        public ServerNameLabelContributor(int order) {
+        public ProviderNameLabelContributor(int order) {
             super(order);
         }
 
         @Override
         public void contribute(Map<String, String> labels, LabelContribution labelContribution) {
             Validate.notNull(labelContribution, "labelContribution must not be null");
-            labels.put(LABEL_SERVER_NAME, labelContribution.getServiceProviderName());
+            labels.put(LABEL_PROVIDER_NAME, labelContribution.getServiceProviderName());
         }
 
     }
