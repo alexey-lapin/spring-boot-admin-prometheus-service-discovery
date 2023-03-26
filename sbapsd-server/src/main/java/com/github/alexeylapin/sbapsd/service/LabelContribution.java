@@ -7,6 +7,9 @@ import lombok.Getter;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Context for {@link LabelContributor}
+ */
 @Getter
 public class LabelContribution {
 
@@ -15,6 +18,7 @@ public class LabelContribution {
     private final String appName;
     private final List<Instance> instances;
 
+    @Builder
     public LabelContribution(String serviceProviderName,
                              Map<String, String> staticLabels,
                              String appName,

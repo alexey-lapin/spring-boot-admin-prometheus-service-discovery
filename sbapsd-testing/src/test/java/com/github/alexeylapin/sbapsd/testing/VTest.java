@@ -27,10 +27,10 @@
 //            return context;
 //        })
 //                .withUserConfiguration(A.class)
-////                .withPropertyValues("sbapsd.servers.s1.type=registry")
+////                .withPropertyValues("sbapsd.providers.s1.type=registry")
 //                .withPropertyValues("server.port=-1")
-//                .withPropertyValues("sbapsd.servers.s2.type=web")
-//                .withPropertyValues("sbapsd.servers.s2.params.url=http://localhost:8080")
+//                .withPropertyValues("sbapsd.providers.s2.type=web")
+//                .withPropertyValues("sbapsd.providers.s2.params.url=http://localhost:8080")
 ////                .with
 //                .run(context -> {
 //                    assertThat(context).hasSingleBean(ApplicationRegistry.class);

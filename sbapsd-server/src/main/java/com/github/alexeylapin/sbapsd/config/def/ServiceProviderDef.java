@@ -7,6 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Configuration representation of ServiceProvider
+ * @see com.github.alexeylapin.sbapsd.service.factory.ServiceProviderFactory
+ * @see com.github.alexeylapin.sbapsd.service.ServiceProvider
+ */
 @Data
 public class ServiceProviderDef {
 

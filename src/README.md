@@ -90,7 +90,7 @@ Yaml example:
 
 ```yml
 sbapsd:
-  servers:
+  providers:
     server-1:
       type: web
       params:
@@ -173,7 +173,7 @@ filters instances by status (UP, DOWN, OFFLINE, UNKNOWN, OUT_OF_SERVICE)
 ### Prometheus
 
 In prometheus config it is possible to use specific server name or omit it to get merged list of instances
-from all the configured servers:
+from all the configured providers:
 
 - /service-discovery/prometheus/server-1
 - /service-discovery/prometheus

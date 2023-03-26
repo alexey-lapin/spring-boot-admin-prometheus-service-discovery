@@ -5,6 +5,9 @@ import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
+/**
+ * Contains registered {@link ServiceProvider}s
+ */
 public class ServiceProviderRegistry {
 
     private final Map<String, ServiceProvider> map;

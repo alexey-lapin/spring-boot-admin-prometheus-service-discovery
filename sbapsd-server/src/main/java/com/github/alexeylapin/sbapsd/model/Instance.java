@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.util.Map;
 
+/**
+ * Represents an application instance registered in Spring Boot Admin
+ */
 @Builder
 @Data
 public class Instance {

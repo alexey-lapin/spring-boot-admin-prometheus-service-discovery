@@ -12,6 +12,6 @@ import java.util.Map;
 public class ServiceDiscoveryProperties {
 
     private String path;
-    private Map<String, ServiceProviderDef> servers = new HashMap<>();
+    private Map<String, ServiceProviderDef> providers = new HashMap<>();
 
 }

@@ -5,6 +5,10 @@ import lombok.Data;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Configuration representation of Filter
+ * @see com.github.alexeylapin.sbapsd.service.factory.FilterFactory
+ */
 @Data
 public class FilterDef {
 
