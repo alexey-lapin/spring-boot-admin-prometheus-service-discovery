@@ -2,6 +2,7 @@ plugins {
     id("java")
     alias(libs.plugins.spring.boot.v2)
     alias(libs.plugins.spring.deps)
+    id("sbapsd.spotless-conventions")
 }
 
 java {

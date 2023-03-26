@@ -1,5 +1,6 @@
 plugins {
     id("sbapsd.java-library-conventions")
+    id("sbapsd.spotless-conventions")
 }
 
 description = "Spring Boot Admin Prometheus Service Discovery Server"
