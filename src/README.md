@@ -4,12 +4,12 @@
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.alexey-lapin.sbapsd/sbapsd-server/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.alexey-lapin.sbapsd/sbapsd-server/)
 
-This project provides the way to expose applications registered
-in [Spring Boot Admin](https://github.com/codecentric/spring-boot-admin)
+This project offers a method to expose applications registered
+within [Spring Boot Admin](https://github.com/codecentric/spring-boot-admin)
 for [Prometheus](https://prometheus.io/) [http service discovery](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#http_sd_config).
 
-The service discovery functionality can be enabled by applying `@EnableAdminServerServiceDiscovery` annotation.
-One option is to use the library together with Spring Boot Admin server in the same app. This way the
+The service discovery feature can be activated by applying `@EnableAdminServerServiceDiscovery` annotation.
+One option is to integrate the library with the Spring Boot Admin server within the same application. This way the
 SBA's instance registry based provider is available. Another option is to utilize this library separately,
 then only REST based provider is configured.
 
@@ -38,7 +38,7 @@ The library is tested with Spring Boot Admin v1, v2, v3.
 
 ### As a library
 
-The library is based on Spring Boot and reactive stack (Reactor).
+This library is based on Spring Boot and reactive stack (Reactor).
 
 1. Add the `sbapsd-server` dependency
 
@@ -55,7 +55,8 @@ implementation("com.github.alexey-lapin.sbapsd:sbapsd-server:@version@")
 </dependency>
 ```
 
-It is also necessary to have spring web stack on classpath e.g. org.springframework.boot:**spring-boot-starter-webflux** or
+It is also necessary to have spring web stack on classpath e.g. org.springframework.boot:**spring-boot-starter-webflux**
+or
 org.springframework.boot:**spring-boot-starter-web**
 
 2. Put the `@EnableAdminServerServiceDiscovery` annotation
@@ -82,7 +83,7 @@ or
 java -jar sbapsd-standalone-v3-@version@.jar
 ```
 
-Standalone app is also available as experimental GraalVM native binaries for linux and windows.
+Standalone app is also available as GraalVM native binaries for linux and windows.
 
 ### Configuration
 
@@ -104,7 +105,7 @@ sbapsd:
       filters:
         - type: app-name
           params:
-            value: app-.*$
+            value: app-[12]
     server-3:
       type: registry
       labels:
@@ -115,15 +116,96 @@ sbapsd:
             value: UP,DOWN
 ```
 
-#### sbapsd
+This example configures 3 providers. They can be queried individually:
+
+`GET http://localhost:8080/service-discovery/prometheus/server-1`
+
+Response:
+
+```json
+[
+  {
+    "targets": [
+      "somehost:62140"
+    ],
+    "labels": {
+      "__meta_discovery_app_name": "app-3",
+      "__meta_discovery_provider_name": "server-1",
+      "__meta_discovery_actuator_path": "/actuator",
+      "static-label-1": "val-1"
+    }
+  },
+  {
+    "targets": [
+      "somehost:62137"
+    ],
+    "labels": {
+      "__meta_discovery_app_name": "app-2",
+      "__meta_discovery_provider_name": "server-1",
+      "__meta_discovery_actuator_path": "/actuator",
+      "static-label-1": "val-1"
+    }
+  },
+  {
+    "targets": [
+      "somehost:62127",
+      "somehost:62131"
+    ],
+    "labels": {
+      "__meta_discovery_app_name": "app-1",
+      "__meta_discovery_provider_name": "server-1",
+      "__meta_discovery_actuator_path": "/actuator",
+      "static-label-1": "val-1"
+    }
+  }
+]
+```
+
+`GET http://localhost:8080/service-discovery/prometheus/server-2`
+
+Response:
+
+```json
+[
+  {
+    "targets": [
+      "somehost:62137"
+    ],
+    "labels": {
+      "__meta_discovery_provider_name": "server-2",
+      "__meta_discovery_app_name": "app-2",
+      "__meta_discovery_actuator_path": "/actuator"
+    }
+  },
+  {
+    "targets": [
+      "somehost:62127",
+      "somehost:62131"
+    ],
+    "labels": {
+      "__meta_discovery_provider_name": "server-2",
+      "__meta_discovery_app_name": "app-1",
+      "__meta_discovery_actuator_path": "/actuator"
+    }
+  }
+]
+```
+
+Alternatively, it is possible to query all providers in a single call:
+
+`GET http://localhost:8080/service-discovery/prometheus`
+
+In this case results from all providers are merged in one list. 
+
+#### [sbapsd]
 
 Root config
 
-| key      | type |
-|----------|------|
-| servers* | map  |
+| key        | type |
+|------------|------|
+| providers* | map  |
 
-#### server
+#### [server]
 
 Configures the way of how to obtain instances either directly from instance **registry** or via **web**
 
@@ -134,7 +216,7 @@ Configures the way of how to obtain instances either directly from instance **re
 | labels  | map                  |
 | filters | list                 |
 
-#### server.params (web)
+#### [server.params] (web)
 
 Configures web connectivity
 
@@ -145,16 +227,16 @@ Configures web connectivity
 | password | string |
 | insecure | bool   |
 
-#### filter
+#### [filter]
 
-Configures what instances should be exposed 
+Configures what instances should be exposed
 
 | key    | type                    |
 |--------|-------------------------|
 | type*  | string: app-name/status |
 | params | map                     |
 
-#### filter.params (app-name)
+#### [filter.params] (app-name)
 
 Filters instances by spring.application.name
 
@@ -162,15 +244,15 @@ Filters instances by spring.application.name
 |--------|----------------|
 | value* | string (regex) |
 
-#### filter.params (status)
+#### [filter.params] (status)
 
-filters instances by status (UP, DOWN, OFFLINE, UNKNOWN, OUT_OF_SERVICE) 
+Filters instances by status (UP, DOWN, OFFLINE, UNKNOWN, OUT_OF_SERVICE)
 
 | key    | type                     |
 |--------|--------------------------|
 | value* | string (comma-separated) |
 
-### Prometheus
+### Prometheus configuration
 
 In prometheus config it is possible to use specific server name or omit it to get merged list of instances
 from all the configured providers:
