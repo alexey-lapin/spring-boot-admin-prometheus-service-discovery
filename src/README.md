@@ -8,31 +8,19 @@ This project offers a method to expose applications registered
 within [Spring Boot Admin](https://github.com/codecentric/spring-boot-admin)
 for [Prometheus](https://prometheus.io/) [http service discovery](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#http_sd_config).
 
-The service discovery feature can be activated by applying `@EnableAdminServerServiceDiscovery` annotation.
-One option is to integrate the library with the Spring Boot Admin server within the same application. This way the
-SBA's instance registry based provider is available. Another option is to utilize this library separately,
-then only REST based provider is configured.
+## Why?
 
-```java
-
-@SpringBootApplication
-@EnableAdminServer
-@EnableAdminServerServiceDiscovery
-public class App {
-
-    public static void main(String[] args) {
-        SpringApplication.run(App.class, args);
-    }
-
-}
-```
+SBAPSD is the perfect solution if you already have a setup with Spring Boot-based applications registered in Spring Boot
+Admin and want to introduce a monitoring stack based on Prometheus without manually adding
+each instance to the scrape configuration or setting up any other service discovery tool.
+![Diagram](./src/sbapsd.png "SBAPSD")
 
 The library is tested with Spring Boot Admin v1, v2, v3.
 
-| type     | v1  | v2  | v3  |
-|----------|-----|-----|-----|
-| registry |     | ✔   | ✔   |
-| web      | ✔   | ✔   | ✔   |
+| type     | v1 | v2 | v3 |
+|----------|----|----|----|
+| registry |    | ✔  | ✔  |
+| web      | ✔  | ✔  | ✔  |
 
 ## Usage
 
@@ -60,6 +48,21 @@ or
 org.springframework.boot:**spring-boot-starter-web**
 
 2. Put the `@EnableAdminServerServiceDiscovery` annotation
+
+```java
+
+@SpringBootApplication
+@EnableAdminServer
+@EnableAdminServerServiceDiscovery
+public class App {
+
+    public static void main(String[] args) {
+        SpringApplication.run(App.class, args);
+    }
+
+}
+```
+
 3. Add config props - see Configuration section below
 4. Customize autoconfigured beans if necessary (see `ServiceDiscoveryAutoConfiguration` class)
 
@@ -195,7 +198,7 @@ Alternatively, it is possible to query all providers in a single call:
 
 `GET http://localhost:8080/service-discovery/prometheus`
 
-In this case results from all providers are merged in one list. 
+In this case results from all providers are merged in one list.
 
 #### [sbapsd]
 
