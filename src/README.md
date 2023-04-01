@@ -17,10 +17,10 @@ each instance to the scrape configuration or setting up any other service discov
 
 The library is tested with Spring Boot Admin v1, v2, v3.
 
-| type     | v1 | v2 | v3 |
-|----------|----|----|----|
-| registry |    | ✔  | ✔  |
-| web      | ✔  | ✔  | ✔  |
+| provider type | v1 | v2 | v3 |
+|---------------|----|----|----|
+| registry      |    | ✔  | ✔  |
+| web           | ✔  | ✔  | ✔  |
 
 ## Usage
 
@@ -52,7 +52,6 @@ org.springframework.boot:**spring-boot-starter-web**
 ```java
 
 @SpringBootApplication
-@EnableAdminServer
 @EnableAdminServerServiceDiscovery
 public class App {
 
