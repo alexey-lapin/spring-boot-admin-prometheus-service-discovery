@@ -24,9 +24,72 @@ The library is tested with Spring Boot Admin v1, v2, v3.
 
 ## Usage
 
-### As a library
+### As a standalone app
 
-This library is based on Spring Boot and reactive stack (Reactor).
+Grab a jar from
+the [releases page](https://github.com/alexey-lapin/spring-boot-admin-prometheus-service-discovery/releases/latest):
+
+- v2 is based on Spring Boot 2 and requires Java 8
+- v3 is based on Spring Boot 3 and requires Java 17
+
+and run it like so:
+
+```shell
+java -jar sbapsd-standalone-v2-@version@.jar
+java -jar sbapsd-standalone-v3-@version@.jar
+```
+
+Standalone app is also available as **GraalVM native binaries** for linux and windows.
+
+### As a library combined with Spring Boot Admin Server
+
+This option autoconfigures `web` provider to obtain instances via SBA's REST API.
+Additionally, it autoconfigures `registry` provider to obtain instances directly from SBA's InstanceRegistry.
+
+1. Add the `sbapsd-server` dependency
+
+```kotlin
+implementation("de.codecentric:spring-boot-admin-server:latest")
+implementation("com.github.alexey-lapin.sbapsd:sbapsd-server:@version@")
+```
+
+```xml
+
+<dependencies>
+    <dependency>
+        <groupId>de.codecentric</groupId>
+        <artifactId>spring-boot-admin-server</artifactId>
+        <version>latest</version>
+    </dependency>
+    <dependency>
+        <groupId>com.github.alexey-lapin.sbapsd</groupId>
+        <artifactId>sbapsd-server</artifactId>
+        <version>@version@</version>
+    </dependency>
+</dependencies>
+```
+
+2. Put the `@EnableAdminServerServiceDiscovery` annotation
+
+```java
+
+@SpringBootApplication
+@EnableAdminServer
+@EnableAdminServerServiceDiscovery
+public class App {
+
+    public static void main(String[] args) {
+        SpringApplication.run(App.class, args);
+    }
+
+}
+```
+
+3. Add config props - see Configuration section below
+4. Customize autoconfigured beans if necessary (see `ServiceDiscoveryAutoConfiguration` class)
+
+### As a library without Spring Boot Admin Server
+This option only autoconfigures `web` provider to obtain instances via SBA's REST API.
 
 1. Add the `sbapsd-server` dependency
 
@@ -36,16 +99,18 @@ implementation("com.github.alexey-lapin.sbapsd:sbapsd-server:@version@")
 
 ```xml
 
-<dependency>
-    <groupId>com.github.alexey-lapin.sbapsd</groupId>
-    <artifactId>sbapsd-server</artifactId>
-    <version>@version@</version>
-</dependency>
+<dependencies>
+    <dependency>
+        <groupId>com.github.alexey-lapin.sbapsd</groupId>
+        <artifactId>sbapsd-server</artifactId>
+        <version>@version@</version>
+    </dependency>
+</dependencies>
 ```
 
+This library is based on Spring Boot and Reactive Stack (Reactor).
 It is also necessary to have spring web stack on classpath e.g. org.springframework.boot:**spring-boot-starter-webflux**
-or
-org.springframework.boot:**spring-boot-starter-web**
+or org.springframework.boot:**spring-boot-starter-web**.
 
 2. Put the `@EnableAdminServerServiceDiscovery` annotation
 
@@ -64,28 +129,6 @@ public class App {
 
 3. Add config props - see Configuration section below
 4. Customize autoconfigured beans if necessary (see `ServiceDiscoveryAutoConfiguration` class)
-
-### As a standalone app
-
-Grab a jar from
-the [releases page](https://github.com/alexey-lapin/spring-boot-admin-prometheus-service-discovery/releases/latest):
-
-- v2 is based on Spring Boot 2 and requires Java 8
-- v3 is based on Spring Boot 3 and requires Java 17
-
-and run it like so:
-
-```shell
-java -jar sbapsd-standalone-v2-@version@.jar
-```
-
-or
-
-```shell
-java -jar sbapsd-standalone-v3-@version@.jar
-```
-
-Standalone app is also available as GraalVM native binaries for linux and windows.
 
 ### Configuration
 
