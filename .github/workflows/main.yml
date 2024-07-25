@@ -18,7 +18,7 @@ jobs:
         sba-version: [ '1.4.6', '1.5.7' ]
     steps:
       - name: Checkout project sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Java
         uses: actions/setup-java@v3
@@ -50,7 +50,7 @@ jobs:
         sba-version: [ '2.4.4', '2.5.6', '2.6.11', '2.7.10' ]
     steps:
       - name: Checkout project sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Java
         uses: actions/setup-java@v3
@@ -82,7 +82,7 @@ jobs:
         sba-version: [ '3.0.0' ]
     steps:
       - name: Checkout project sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Java
         uses: actions/setup-java@v3
@@ -111,7 +111,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout project sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Java
         uses: actions/setup-java@v3
@@ -138,7 +138,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout project sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Java GraalVM
         uses: graalvm/setup-graalvm@v1
@@ -167,7 +167,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout project sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Java GraalVM
         uses: graalvm/setup-graalvm@v1
@@ -198,7 +198,7 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     steps:
       - name: Checkout project sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Java
         uses: actions/setup-java@v3
