@@ -3,6 +3,7 @@ name: CI
 on:
   push:
     branches:
+      - main
       - master
     tags:
       - 'v*.*.*'
@@ -17,10 +18,10 @@ jobs:
       matrix:
         sba-version: [ '1.4.6', '1.5.7' ]
     steps:
-      - name: Checkout project sources
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Java
+      - name: Setup JDK
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -49,10 +50,10 @@ jobs:
       matrix:
         sba-version: [ '2.4.4', '2.5.6', '2.6.11', '2.7.10' ]
     steps:
-      - name: Checkout project sources
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Java
+      - name: Setup JDK
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -81,14 +82,14 @@ jobs:
       matrix:
         sba-version: [ '3.0.0' ]
     steps:
-      - name: Checkout project sources
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Java
+      - name: Setup JDK
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 21
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3
@@ -110,14 +111,14 @@ jobs:
   build-jvm:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout project sources
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Java
+      - name: Setup JDK
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 21
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3
@@ -125,29 +126,41 @@ jobs:
       - name: Gradle build
         run: ./gradlew build
 
-      - name: Upload artifacts
+      - name: Upload app-jar
         uses: actions/upload-artifact@v4
         with:
           name: app-jar
           path: |
             sbapsd-standalone-v2/build/libs/*.jar
             sbapsd-standalone-v3/build/libs/*.jar
-          retention-days: 5
+          retention-days: 7
 
-  build-native-linux:
-    runs-on: ubuntu-20.04
+  build-native:
+    strategy:
+      matrix:
+        include:
+          - name: linux
+            os: ubuntu-20.04
+            artifact: app-native-linux
+          - name: windows
+            os: windows-latest
+            artifact: app-native-windows
+          - name: macos
+            os: macos-latest
+            artifact: app-native-macos
+    runs-on: ${{ matrix.os }}
+    name: build-native-${{ matrix.name }}
     steps:
-      - name: Checkout project sources
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Java GraalVM
+      - name: Setup GraalVM
         uses: graalvm/setup-graalvm@v1
         with:
-          version: "22.3.1"
-          java-version: "19"
-          components: "native-image"
+          java-version: '21'
+          distribution: 'liberica'
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          native-image-job-reports: "true"
+          native-image-job-reports: 'true'
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3
@@ -158,53 +171,24 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: app-native-linux
+          name: ${{ matrix.artifact }}
           path: |
             sbapsd-standalone-v3/build/native/nativeCompile
-          retention-days: 5
-
-  build-native-windows:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout project sources
-        uses: actions/checkout@v4
-
-      - name: Setup Java GraalVM
-        uses: graalvm/setup-graalvm@v1
-        with:
-          version: "22.3.1"
-          java-version: "19"
-          components: "native-image"
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          native-image-job-reports: "true"
-
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3
-
-      - name: Gradle nativeCompile
-        run: ./gradlew nativeCompile
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-native-windows
-          path: |
-            sbapsd-standalone-v3/build/native/nativeCompile
-          retention-days: 5
+          retention-days: 7
 
   release:
     runs-on: ubuntu-latest
-    needs: [ test-v1, test-v2, test-v3, build-jvm, build-native-linux, build-native-windows ]
+    needs: [ test-v1, test-v2, test-v3, build-jvm, build-native ]
     if: startsWith(github.ref, 'refs/tags/')
     steps:
-      - name: Checkout project sources
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Java
+      - name: Setup JDK
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 21
 
       - name: Download Artifacts
         uses: actions/download-artifact@v4
@@ -213,12 +197,18 @@ jobs:
         run: |
           cd app-native-linux
           chmod +x sbapsd
-          tar -czf $(cat gradle-artifact.txt)-linux-amd64.tar.gz sbapsd
+          tar -czf $(cat gradle-artifact.txt).tar.gz sbapsd
+
+      - name: Prepare macOS Artifacts
+        run: |
+          cd app-native-macos
+          chmod +x sbapsd
+          tar -czf $(cat gradle-artifact.txt).tar.gz sbapsd
 
       - name: Prepare Windows Artifacts
         run: |
           cd app-native-windows
-          zip $(cat gradle-artifact.txt)-windows-amd64.zip sbapsd.exe
+          zip $(cat gradle-artifact.txt).zip sbapsd.exe
 
       - name: Build Release Changelog
         id: build-release-changelog
@@ -236,6 +226,7 @@ jobs:
           files: |
             app-jar/**/!(*-plain).jar
             app-native-linux/*.tar.gz
+            app-native-macos/*.tar.gz
             app-native-windows/*.zip
 
       - name: Setup Gradle
