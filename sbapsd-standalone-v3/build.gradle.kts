@@ -1,4 +1,5 @@
 import org.graalvm.buildtools.gradle.tasks.BuildNativeImageTask
+import org.gradle.internal.os.OperatingSystem
 
 plugins {
     id("java")
@@ -34,10 +35,22 @@ val writeArtifactFile by tasks.registering {
         outputDirectory.get().asFile.mkdirs()
         outputDirectory.file("gradle-artifact.txt")
             .get().asFile
-            .writeText("${project.name}-${project.version}")
+            .writeText("${project.name}-${project.version}-${platform()}")
     }
 }
 
 tasks.getByName("nativeCompile") {
     finalizedBy(writeArtifactFile)
 }
+
+fun platform(): String {
+    val os = OperatingSystem.current()
+    val arc = System.getProperty("os.arch")
+    return when {
+        OperatingSystem.current().isWindows -> "windows-${arc}"
+        OperatingSystem.current().isLinux -> "linux-${arc}"
+        OperatingSystem.current().isMacOsX -> "darwin-${arc}"
+        else -> os.nativePrefix
+    }
+}
+
