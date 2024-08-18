@@ -31,7 +31,8 @@ jobs:
         uses: gradle/gradle-build-action@v3
 
       - name: Gradle run server
-        run: nohup ./gradlew runV1SBAServer -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8081 &
+#        run: nohup ./gradlew runV1SBAServer -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8081 &
+        run: ./gradlew runV1SBAServer -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8081
 
       - name: Await server up
         uses: cygnetdigital/wait_for_response@v2.0.0
@@ -63,7 +64,8 @@ jobs:
         uses: gradle/gradle-build-action@v3
 
       - name: Gradle run server
-        run: nohup ./gradlew runV2SBAServer -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8082 &
+#        run: nohup ./gradlew runV2SBAServer -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8082 &
+        run: ./gradlew runV2SBAServer -Psba.version=${{ matrix.sba-version }} -Psba.server.port=8082
 
       - name: Await server up
         uses: cygnetdigital/wait_for_response@v2.0.0
