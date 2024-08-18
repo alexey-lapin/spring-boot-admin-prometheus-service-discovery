@@ -1,14 +1,8 @@
-import net.researchgate.release.ReleaseExtension
-import net.researchgate.release.tasks.PreTagCommit
 import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
-    alias(libs.plugins.release)
     alias(libs.plugins.nexus)
-}
-
-release {
-    tagTemplate.set("v${'$'}version")
+    id("pl.allegro.tech.build.axion-release")
 }
 
 nexusPublishing {
@@ -33,17 +27,4 @@ val updateReleaseDependentFiles by tasks.registering(Copy::class) {
     }
     into(projectDir)
     doNotTrackState("workaround")
-}
-
-tasks.named("afterReleaseBuild") {
-    dependsOn(updateReleaseDependentFiles)
-}
-
-tasks.named<PreTagCommit>("preTagCommit") {
-    doFirst {
-        val scmAdapter = project.extensions.getByName<ReleaseExtension>("release").scmAdapter
-        releaseUpdatableFiles.forEach {
-            scmAdapter.add(file(it.second))
-        }
-    }
 }

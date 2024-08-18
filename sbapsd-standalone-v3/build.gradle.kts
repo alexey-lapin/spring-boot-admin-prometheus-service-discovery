@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.spring.boot.v3)
     alias(libs.plugins.spring.deps)
     alias(libs.plugins.graalvm)
+    id("sbapsd.project-conventions")
     id("sbapsd.spotless-conventions")
 }
 
