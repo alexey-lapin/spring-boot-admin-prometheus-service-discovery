@@ -30,4 +30,7 @@ tasks.create<JavaExec>("runV2SBAServer") {
     classpath = sourceSets["main"].runtimeClasspath
     mainClass.set("com.github.alexeylapin.sbapsd.testing.V2SBATesting")
     systemProperty("sba.server.port", findProperty("sba.server.port") ?: "8082")
+    javaLauncher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
 }

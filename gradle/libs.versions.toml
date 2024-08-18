@@ -5,6 +5,7 @@ sba-v2 = "2.7.10"
 micrometer = "1.9.8"
 
 [libraries]
+spotless-plugin = { module = "com.diffplug.spotless:spotless-plugin-gradle", version = "6.25.0" }
 spring-boot-v2-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot-v2" }
 
 [plugins]
