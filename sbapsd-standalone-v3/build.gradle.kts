@@ -31,7 +31,7 @@ dependencies {
 
 val writeArtifactFile by tasks.registering {
     doLast {
-        val outputDirectory = tasks.getByName<BuildNativeImageTask>("nativeCompile").outputDirectory
+        val outputDirectory = tasks.named<BuildNativeImageTask>("nativeCompile").get().outputDirectory
         outputDirectory.get().asFile.mkdirs()
         outputDirectory.file("gradle-artifact.txt")
             .get().asFile
@@ -39,7 +39,7 @@ val writeArtifactFile by tasks.registering {
     }
 }
 
-tasks.getByName("nativeCompile") {
+tasks.named("nativeCompile") {
     finalizedBy(writeArtifactFile)
 }
 

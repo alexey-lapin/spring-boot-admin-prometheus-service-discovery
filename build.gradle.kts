@@ -20,7 +20,7 @@ nexusPublishing {
     }
 }
 
-val releaseUpdatableFiles = listOf<Pair<String, String>>(
+val releaseUpdatableFiles = listOf(
     Pair("src/README.md", ".")
 )
 
@@ -35,11 +35,11 @@ val updateReleaseDependentFiles by tasks.registering(Copy::class) {
     doNotTrackState("workaround")
 }
 
-tasks.getByName("afterReleaseBuild") {
+tasks.named("afterReleaseBuild") {
     dependsOn(updateReleaseDependentFiles)
 }
 
-tasks.getByName<PreTagCommit>("preTagCommit") {
+tasks.named<PreTagCommit>("preTagCommit") {
     doFirst {
         val scmAdapter = project.extensions.getByName<ReleaseExtension>("release").scmAdapter
         releaseUpdatableFiles.forEach {

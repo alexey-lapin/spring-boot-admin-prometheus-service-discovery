@@ -1,5 +1,5 @@
 plugins {
-    java
+    id("java")
 }
 
 java {
@@ -7,6 +7,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-tasks.getByName<Test>("test") {
+tasks.withType<Test> {
     useJUnitPlatform()
 }

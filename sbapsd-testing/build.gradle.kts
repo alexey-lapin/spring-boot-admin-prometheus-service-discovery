@@ -29,7 +29,7 @@ dependencies {
     testImplementation("org.assertj:assertj-core")
 }
 
-tasks.getByName<Test>("test") {
+tasks.named<Test>("test") {
     systemProperty("sba.version", findProperty("sba.version") ?: "0.0.0")
     systemProperty("sba.server.port", findProperty("sba.server.port") ?: "8080")
     testLogging {
