@@ -1,5 +1,6 @@
 plugins {
     id("sbapsd.java-library-conventions")
+    id("sbapsd.project-conventions")
     id("sbapsd.spotless-conventions")
 }
 

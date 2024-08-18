@@ -16,7 +16,7 @@ dependencies {
     }
 }
 
-tasks.getByName<Test>("test") {
+tasks.named<Test>("test") {
     onlyIf { isSBAVersion1() }
 }
 
@@ -24,7 +24,7 @@ tasks.withType<JavaCompile>() {
     onlyIf { isSBAVersion1() }
 }
 
-tasks.create<JavaExec>("runV1SBAServer") {
+tasks.register<JavaExec>("runV1SBAServer") {
     onlyIf { isSBAVersion1() }
     classpath = sourceSets["main"].runtimeClasspath
     mainClass.set("com.github.alexeylapin.sbapsd.testing.V1SBATesting")
