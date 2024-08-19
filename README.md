@@ -10,12 +10,12 @@ for [Prometheus](https://prometheus.io/) [http service discovery](https://promet
 
 ## Why?
 
-SBAPSD is the perfect solution if you already have a setup with Spring Boot-based applications registered in Spring Boot
-Admin and want to introduce a monitoring stack based on Prometheus without manually adding
+**SBAPSD** is the perfect solution if you already have a setup with Spring Boot-based applications registered in
+**Spring Boot Admin** and want to introduce a monitoring stack based on **Prometheus** without manually adding
 each instance to the scrape configuration or setting up any other service discovery tool.
 ![Diagram](./src/sbapsd.png "SBAPSD")
 
-The library is tested with Spring Boot Admin v1, v2, v3.
+The library is tested with Spring Boot Admin **v1**, **v2**, **v3**.
 
 | provider type | v1 | v2 | v3 |
 |---------------|----|----|----|
@@ -26,17 +26,19 @@ The library is tested with Spring Boot Admin v1, v2, v3.
 
 ### As a standalone app
 
-Grab a jar from
-the [releases page](https://github.com/alexey-lapin/spring-boot-admin-prometheus-service-discovery/releases/latest):
+1. Grab a jar from
+   the [releases page](https://github.com/alexey-lapin/spring-boot-admin-prometheus-service-discovery/releases/latest):
 
 - v2 is based on Spring Boot 2 and requires Java 8
 - v3 is based on Spring Boot 3 and requires Java 17
 
-and run it like so:
+2. Add config props (application.properties/application.yml) - see [Configuration](#configuration) section below
+
+3. And run it like so:
 
 ```shell
-java -jar sbapsd-standalone-v2-0.0.6.jar
-java -jar sbapsd-standalone-v3-0.0.6.jar
+java -jar sbapsd-standalone-v2-0.0.7-SNAPSHOT.jar
+java -jar sbapsd-standalone-v3-0.0.7-SNAPSHOT.jar
 ```
 
 Standalone app is also available as **GraalVM native binaries** for linux and windows.
@@ -49,8 +51,8 @@ Additionally, it autoconfigures `registry` provider to obtain instances directly
 1. Add the `sbapsd-server` dependency
 
 ```kotlin
-implementation("de.codecentric:spring-boot-admin-server:latest")
-implementation("com.github.alexey-lapin.sbapsd:sbapsd-server:0.0.6")
+implementation("de.codecentric:spring-boot-admin-server:x.y.z")
+implementation("com.github.alexey-lapin.sbapsd:sbapsd-server:0.0.7-SNAPSHOT")
 ```
 
 ```xml
@@ -59,12 +61,12 @@ implementation("com.github.alexey-lapin.sbapsd:sbapsd-server:0.0.6")
     <dependency>
         <groupId>de.codecentric</groupId>
         <artifactId>spring-boot-admin-server</artifactId>
-        <version>latest</version>
+        <version>x.y.z</version>
     </dependency>
     <dependency>
         <groupId>com.github.alexey-lapin.sbapsd</groupId>
         <artifactId>sbapsd-server</artifactId>
-        <version>0.0.6</version>
+        <version>0.0.7-SNAPSHOT</version>
     </dependency>
 </dependencies>
 ```
@@ -85,16 +87,17 @@ public class App {
 }
 ```
 
-3. Add config props - see Configuration section below
+3. Add config props - see [Configuration](#configuration) section below
 4. Customize autoconfigured beans if necessary (see `ServiceDiscoveryAutoConfiguration` class)
 
 ### As a library without Spring Boot Admin Server
+
 This option only autoconfigures `web` provider to obtain instances via SBA's REST API.
 
 1. Add the `sbapsd-server` dependency
 
 ```kotlin
-implementation("com.github.alexey-lapin.sbapsd:sbapsd-server:0.0.6")
+implementation("com.github.alexey-lapin.sbapsd:sbapsd-server:0.0.7-SNAPSHOT")
 ```
 
 ```xml
@@ -103,7 +106,7 @@ implementation("com.github.alexey-lapin.sbapsd:sbapsd-server:0.0.6")
     <dependency>
         <groupId>com.github.alexey-lapin.sbapsd</groupId>
         <artifactId>sbapsd-server</artifactId>
-        <version>0.0.6</version>
+        <version>0.0.7-SNAPSHOT</version>
     </dependency>
 </dependencies>
 ```
@@ -127,12 +130,23 @@ public class App {
 }
 ```
 
-3. Add config props - see Configuration section below
+3. Add config props - see [Configuration](#configuration) section below
 4. Customize autoconfigured beans if necessary (see `ServiceDiscoveryAutoConfiguration` class)
 
 ### Configuration
 
-Yaml example:
+#### Minimal yaml example:
+
+```yml
+sbapsd:
+  providers:
+    server-1:
+      type: web
+      params:
+        url: http://localhost:8092/instances # SBA v2/v3
+```
+
+#### Multi-provider yaml example:
 
 ```yml
 sbapsd:
@@ -161,7 +175,7 @@ sbapsd:
             value: UP,DOWN
 ```
 
-This example configures 3 providers. They can be queried individually:
+This example configures 3 providers named `server-1`, `server-2`, `server-3`. They can be queried individually:
 
 `GET http://localhost:8080/service-discovery/prometheus/server-1`
 
