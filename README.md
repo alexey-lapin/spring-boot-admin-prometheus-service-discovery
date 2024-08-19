@@ -37,8 +37,8 @@ The library is tested with Spring Boot Admin **v1**, **v2**, **v3**.
 3. And run it like so:
 
 ```shell
-java -jar sbapsd-standalone-v2-0.0.7-SNAPSHOT.jar
-java -jar sbapsd-standalone-v3-0.0.7-SNAPSHOT.jar
+java -jar sbapsd-standalone-v2-0.0.7.jar
+java -jar sbapsd-standalone-v3-0.0.7.jar
 ```
 
 Standalone app is also available as **GraalVM native binaries** for linux and windows.
@@ -52,7 +52,7 @@ Additionally, it autoconfigures `registry` provider to obtain instances directly
 
 ```kotlin
 implementation("de.codecentric:spring-boot-admin-server:x.y.z")
-implementation("com.github.alexey-lapin.sbapsd:sbapsd-server:0.0.7-SNAPSHOT")
+implementation("com.github.alexey-lapin.sbapsd:sbapsd-server:0.0.7")
 ```
 
 ```xml
@@ -66,7 +66,7 @@ implementation("com.github.alexey-lapin.sbapsd:sbapsd-server:0.0.7-SNAPSHOT")
     <dependency>
         <groupId>com.github.alexey-lapin.sbapsd</groupId>
         <artifactId>sbapsd-server</artifactId>
-        <version>0.0.7-SNAPSHOT</version>
+        <version>0.0.7</version>
     </dependency>
 </dependencies>
 ```
@@ -97,7 +97,7 @@ This option only autoconfigures `web` provider to obtain instances via SBA's RES
 1. Add the `sbapsd-server` dependency
 
 ```kotlin
-implementation("com.github.alexey-lapin.sbapsd:sbapsd-server:0.0.7-SNAPSHOT")
+implementation("com.github.alexey-lapin.sbapsd:sbapsd-server:0.0.7")
 ```
 
 ```xml
@@ -106,7 +106,7 @@ implementation("com.github.alexey-lapin.sbapsd:sbapsd-server:0.0.7-SNAPSHOT")
     <dependency>
         <groupId>com.github.alexey-lapin.sbapsd</groupId>
         <artifactId>sbapsd-server</artifactId>
-        <version>0.0.7-SNAPSHOT</version>
+        <version>0.0.7</version>
     </dependency>
 </dependencies>
 ```
