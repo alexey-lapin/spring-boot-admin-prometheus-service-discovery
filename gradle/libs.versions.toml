@@ -11,7 +11,7 @@ foojay-resolver-plugin = { module = "org.gradle.toolchains:foojay-resolver", ver
 release-plugin = { group = "pl.allegro.tech.build", name = "axion-release-plugin", version = "1.18.16" }
 
 [plugins]
-graalvm = {id = "org.graalvm.buildtools.native", version = "0.10.4"}
+graalvm = {id = "org.graalvm.buildtools.native", version = "0.10.5"}
 nexus = {id = "io.github.gradle-nexus.publish-plugin", version = "2.0.0"}
 spring-boot-v2 = {id = "org.springframework.boot", version.ref = "spring-boot-v2"}
 spring-boot-v3 = {id = "org.springframework.boot", version.ref = "spring-boot-v3"}
