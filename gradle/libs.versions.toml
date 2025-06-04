@@ -5,7 +5,7 @@ spring-boot-v2 = "2.7.18"
 spring-boot-v3 = "3.5.0"
 
 [libraries]
-spotless-plugin = { module = "com.diffplug.spotless:spotless-plugin-gradle", version = "7.0.3" }
+spotless-plugin = { module = "com.diffplug.spotless:spotless-plugin-gradle", version = "7.0.4" }
 spring-boot-v2-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot-v2" }
 foojay-resolver-plugin = { module = "org.gradle.toolchains:foojay-resolver", version = "1.0.0" }
 release-plugin = { group = "pl.allegro.tech.build", name = "axion-release-plugin", version = "1.18.17" }
