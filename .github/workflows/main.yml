@@ -212,7 +212,7 @@ jobs:
 
       - name: Build Release Changelog
         id: build-release-changelog
-        uses: mikepenz/release-changelog-builder-action@v5
+        uses: mikepenz/release-changelog-builder-action@v6
         with:
           configuration: ".github/release-changelog-builder.json"
         env:
