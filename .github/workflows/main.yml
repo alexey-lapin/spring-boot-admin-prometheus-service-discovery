@@ -127,7 +127,7 @@ jobs:
         run: ./gradlew build
 
       - name: Upload app-jar
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: app-jar
           path: |
@@ -169,7 +169,7 @@ jobs:
         run: ./gradlew nativeCompile
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.artifact }}
           path: |
@@ -191,7 +191,7 @@ jobs:
           java-version: 21
 
       - name: Download Artifacts
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
 
       - name: Prepare Linux Artifacts
         run: |
