@@ -25,7 +25,7 @@ jobs:
         uses: actions/setup-java@v6
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 21.0.12+101.0.LTS
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3
@@ -57,7 +57,7 @@ jobs:
         uses: actions/setup-java@v6
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 21.0.12+101.0.LTS
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3
@@ -89,7 +89,7 @@ jobs:
         uses: actions/setup-java@v6
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 21.0.12+101.0.LTS
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3
@@ -118,7 +118,7 @@ jobs:
         uses: actions/setup-java@v6
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 21.0.12+101.0.LTS
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3
@@ -157,7 +157,7 @@ jobs:
       - name: Setup GraalVM
         uses: graalvm/setup-graalvm@v1
         with:
-          java-version: '21'
+          java-version: '21.0.12+101.0.LTS'
           distribution: 'liberica'
           github-token: ${{ secrets.GITHUB_TOKEN }}
           native-image-job-reports: 'true'
@@ -188,7 +188,7 @@ jobs:
         uses: actions/setup-java@v6
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 21.0.12+101.0.LTS
 
       - name: Download Artifacts
         uses: actions/download-artifact@v8
